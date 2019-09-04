@@ -1,8 +1,5 @@
 ///<reference path='../../typings/app.d.ts'/>
 
-import { jsxOpeningElement } from "@babel/types";
-import { string } from "prop-types";
-
 export async function loadAwards():Promise<Services.AwardData> {
   // NOTE: relative to local public folder
   return await fetch("/academic-award.json")
@@ -13,7 +10,6 @@ export async function loadAwards():Promise<Services.AwardData> {
   return {};
   });
 }
-
 
 export function populatePrograms(dataToSearch:Services.AwardData[]):string[] {
   let extractedProgramList:string[] = [];
