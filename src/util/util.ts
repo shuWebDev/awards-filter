@@ -23,11 +23,11 @@ export function populatePrograms(dataToSearch:Services.AwardData[]):string[] {
 }
 
 // NOTE: converts raw Award Data records into records we can filter
-export function convertAwardData(awardData: Services.AwardData[]): Services.AwardDataSearchable[] {
+/*export function convertAwardData(awardData: Services.AwardData[]): Services.AwardData[] {
   //console.log(awardData);
-  let returnAwardData: Services.AwardDataSearchable[] = [];
+  let returnAwardData: Services.AwardData[] = [];
   for(let i=0; i<awardData.length; i++) {
-    let recordData:Services.AwardDataSearchable = {
+    let recordData:Services.AwardData = {
       accountType: awardData[i].accountType as string,
       aidType: awardData[i].aidType as string,
       amount: awardData[i].amount as string,
@@ -46,7 +46,7 @@ export function convertAwardData(awardData: Services.AwardData[]): Services.Awar
   }
   
   return returnAwardData;
-}
+}*/
 
 // NOTE: given an object and key, returns the key value
 // (needed for type assertion since Object.keys doesn't directly satisfy a type trying to match key value pairs with filter)

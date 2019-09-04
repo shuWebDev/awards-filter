@@ -3,10 +3,10 @@ import * as UtilServices from '../util/util';
 
 class Results extends React.Component<Services.ResultsProps> {
 
-  displayResults = (resultSet:Services.AwardDataSearchable[]) => {
+  displayResults = (resultSet:Services.AwardData[]) => {
     let listItems = [];
     for(let i=0; i<resultSet.length; i++) {
-      listItems.push(<li>{UtilServices.prop(resultSet[i], "name")}</li>);
+      listItems.push(<li key={`item-${i}`}>{UtilServices.prop(resultSet[i], "name")}</li>);
     }
 
     return listItems;
@@ -18,7 +18,7 @@ class Results extends React.Component<Services.ResultsProps> {
         <div className="grid-x grid-padding-x">
           <div className="cell medium-12">
             <h2>Results of filtering go here.</h2>
-            <ul>
+            <ul className="no-bullet">
               {this.displayResults(this.props.resultSet)}
             </ul>
           </div>

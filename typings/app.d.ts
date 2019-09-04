@@ -8,14 +8,14 @@ declare namespace Services {
   interface AppState {
     programs: string[],
     awardData: Services.AwardData[],
-    filterBoxText: string,
-    resultSet: Services.AwardDataSearchable[],
-    awardDataSearchable: Services.AwardDataSearchable[]
+    //filterBoxText: string,
+    resultSet: Services.AwardData[],
+    //awardDataSearchable: Services.AwardDataSearchable[]
   }
 
   interface FilterBox {
-    filterBoxText: string, 
-    filterBoxChangeHandler: function,
+    //filterBoxText: string, 
+    //filterBoxChangeHandler: function,
     formSubmitHandler: function
   }
 
@@ -24,7 +24,7 @@ declare namespace Services {
   }
 
   interface ResultsProps {
-    resultSet: Services.AwardDataSearchable[]
+    resultSet: Services.AwardData[]
   }
 
   interface AwardData {
@@ -52,7 +52,7 @@ declare namespace Services {
     uuid: string
   }
 
-  interface AwardDataSearchable {
+  /*interface AwardDataSearchable {
     accountType: string;
     aidType: string;
     amount: string;
@@ -67,6 +67,6 @@ declare namespace Services {
     studentStatus: string;
     tags: string;
     
-  }
+  }*/
 }
 

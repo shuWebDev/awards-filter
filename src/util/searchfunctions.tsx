@@ -2,9 +2,9 @@
 import * as UtilServices from "./util";
 
 // NOTE: our master filtering function, calls more specific functions to do more granular filtering of the data
-function generateResultListing (awardData:Services.AwardDataSearchable[], filterBoxText:string, selectedProgram?:string) {
+function generateResultListing (awardData:Services.AwardData[], filterBoxText:string, selectedProgram?:string) {
   // NOTE: our final result set after all filters applied
-  let returnableResultSet:Services.AwardDataSearchable[] = [];
+  let returnableResultSet:Services.AwardData[] = [];
   // NOTE: filter by text string
   returnableResultSet = searchByText(awardData,filterBoxText);
   // TODO: filter by Program/Category
@@ -14,14 +14,14 @@ function generateResultListing (awardData:Services.AwardDataSearchable[], filter
 }
 
 // NOTE: filter results that contain a (string) property that matches a string from an input box
-function searchByText(awardData:Services.AwardDataSearchable[], filterBoxText:string, selectedProgram?:string) {
+function searchByText(awardData:Services.AwardData[], filterBoxText:string, selectedProgram?:string) {
  // NOTE: our return set
- let returnableResultSet:Services.AwardDataSearchable[] = [];
+ let returnableResultSet:Services.AwardData[] = [];
  filterBoxText = filterBoxText.toLowerCase();
 
  // NOTE: get the keys for each award record (array of key names as strings)
  for(let i=0; i<awardData.length; i++) {
-   let currentRecord:Services.AwardDataSearchable = awardData[i];
+   let currentRecord:Services.AwardData = awardData[i];
    const keys:any = Object.keys(currentRecord);
    
    // NOTE: cycle through the list of key names, get their values

@@ -15,42 +15,61 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     this.state = {
       programs: [],
       awardData: [],
-      awardDataSearchable: [],
+      //awardDataSearchable: [],
       resultSet: [],
-      filterBoxText: ""
+      //filterBoxText: ""
     }
 
   }
 
   // NOTE: handles control of value change in filter text box
-  handleFilterChange = (event: React.FormEvent<HTMLInputElement>) => {
+  /*handleFilterChange = (event: React.FormEvent<HTMLInputElement>) => {
     this.setState({ 
       filterBoxText: event.currentTarget.value
     });
+    // NOTE: if filter box isnt empty
+    if(this.state.filterBoxText !== "") {
+      // NOTE: make sure we have a result set
+      if(this.state.resultSet.length) {
+        let filterByTextResultSet = generateResultListing(this.state.resultSet, this.state.filterBoxText);
+        this.setState({
+          resultSet: filterByTextResultSet
+        });
+      }
+    } else {
+      // NOTE: we have nothing to filter by so reset the resultSet back to all records
+      
+      console.log("empty textbox");
+      this.setState({
+        resultSet: this.state.awardData 
+      });
+    }
     return;
-  }
+  }*/
 
   // NOTE: handles form "submission"
   formSubmitHandler = (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault();
     // NOTE: initially, resultSet is all records, so to prevent changing the base data set, awardData which is our gold copy from the fetch, we work with the resultSet, also so we can apply multiple filters to the same data set 
-    if((this.state.resultSet.length) && (this.state.filterBoxText !== "")) {
-      let filterByTextResultSet = generateResultListing(this.state.resultSet, this.state.filterBoxText);
+    let filterBox = document.querySelector("#filterbox-text") as HTMLInputElement;
+    let filterBoxText = filterBox.value;
+    if((this.state.resultSet.length) && (filterBoxText !== "")) {
+      let filterByTextResultSet = generateResultListing(this.state.resultSet, filterBoxText);
       this.setState({
         resultSet: filterByTextResultSet
       });
     } else {
       // NOTE: we have nothing to filter by so reset the resultSet to initial
-      if(this.state.filterBoxText === "") {
+      if(filterBoxText === "") {
         this.setState({
-          resultSet: this.state.awardDataSearchable 
-          // NOTE: this.state.awardDataSearchable will eventually be swapped out to use the original data once our search function is able to ignore record fields with data types it isn't currently working with. i.e., we are searching by a text string and it comes across a number or boolean, behavior would be to ignore that record property and move to the next string field.
+          resultSet: this.state.awardData 
         });
       }
     }
     return;
   }
 
+  
   componentDidMount = () => {
     // NOTE: load our initial data
     UtilServices.loadAwards()
@@ -59,8 +78,8 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
         awardData: response.data,
         programs: UtilServices.populatePrograms(response.data),
         // TODO: shouldn't need a "sanitized/all string version of the original data, our filtering should be able to check field types and ignore those fields that don't match the data type we are comparin against
-        awardDataSearchable: UtilServices.convertAwardData(response.data),
-        resultSet: UtilServices.convertAwardData(response.data)
+        //awardDataSearchable: UtilServices.convertAwardData(response.data),
+        resultSet: response.data //UtilServices.convertAwardData(response.data)
       });
     });
   }
@@ -73,7 +92,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
             <Programs programList={this.state.programs} />
           </div>
           <div className="cell medium-10">
-            <FilterBox formSubmitHandler={this.formSubmitHandler} filterBoxText={this.state.filterBoxText} filterBoxChangeHandler={this.handleFilterChange} />
+            <FilterBox formSubmitHandler={this.formSubmitHandler}  />
             <Results resultSet={this.state.resultSet} />
           </div>
         </div>
