@@ -24,7 +24,7 @@ declare namespace Services {
   }
 
   interface ResultsProps {
-    resultSet: object[]
+    resultSet: Services.AwardDataSearchable[]
   }
 
   interface AwardData {

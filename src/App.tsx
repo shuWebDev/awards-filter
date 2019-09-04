@@ -1,11 +1,11 @@
 ///<reference path='../typings/app.d.ts'/>
 import * as React from 'react';
-//import Programs from './components/programs';
-//import Results from './components/results';
+import Programs from './components/programs';
+import Results from './components/results';
 import FilterBox from './components/filterbox';
 import * as UtilServices from './util/util';
 import { generateResultListing } from './util/searchfunctions';
-import { tsImportEqualsDeclaration } from '@babel/types';
+
 
 
 class App extends React.Component<Services.AppProps, Services.AppState> {
@@ -51,8 +51,6 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     return;
   }
 
-  
-
   componentDidMount = () => {
     // NOTE: load our initial data
     UtilServices.loadAwards()
@@ -72,7 +70,11 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       <main>
         <div className="grid-x grid-margin-x">
           <div className="cell medium-2">
+            <Programs programList={this.state.programs} />
+          </div>
+          <div className="cell medium-10">
             <FilterBox formSubmitHandler={this.formSubmitHandler} filterBoxText={this.state.filterBoxText} filterBoxChangeHandler={this.handleFilterChange} />
+            <Results resultSet={this.state.resultSet} />
           </div>
         </div>
       </main>
