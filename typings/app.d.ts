@@ -1,9 +1,5 @@
 declare namespace Services {
-
-
-  interface AppProps {
-
-  }
+  interface AppProps {}
 
   interface AppState {
     programs: string[],

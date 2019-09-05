@@ -21,10 +21,24 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     }
   }
 
+  componentDidMount = () => {
+    // NOTE: load our initial data
+    UtilServices.loadAwards()
+    .then((response:any) => {
+      this.setState({
+        awardData: response.data,
+        programs: UtilServices.populatePrograms(response.data),
+        resultSet: response.data
+      });
+    });
+  }
+
   // NOTE: handles form "submission"
+  // NOTE: should handle application of all filtering at once
   formSubmitHandler = (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault();
     // NOTE: initially, resultSet is all records, so to prevent changing the base data set, awardData which is our gold copy from the fetch, we work with the resultSet, also so we can apply multiple filters to the same data set 
+    // NOTE: move handling of filterbox value changes to its own event handler that will update in state as the value changes, no actual calls to filtering here, save that for Submit button's handler
     let filterBox = document.querySelector("#filterbox-text") as HTMLInputElement;
     let filterBoxText = filterBox.value;
     if((this.state.resultSet.length) && (filterBoxText !== "")) {
@@ -51,22 +65,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     return;
   }
 
-  
-
-  componentDidMount = () => {
-    // NOTE: load our initial data
-    UtilServices.loadAwards()
-    .then((response:any) => {
-      this.setState({
-        awardData: response.data,
-        programs: UtilServices.populatePrograms(response.data),
-        // TODO: shouldn't need a "sanitized/all string version of the original data, our filtering should be able to check field types and ignore those fields that don't match the data type we are comparin against
-        //awardDataSearchable: UtilServices.convertAwardData(response.data),
-        resultSet: response.data //UtilServices.convertAwardData(response.data)
-      });
-    });
-  }
-
+  // NOTE: should just handle adding/subtracting program names from state depending on whih ones are checked. No actual call to search methods here
   programCheckboxHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     // NOTE: inspect the incoming checkbox value
     //let value = event.target.value;
@@ -88,8 +87,6 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       }
     }
     
-    //let filterByProgramResultSet = generateResultListing(this.state.resultSet, this.state.filterBoxText, this.state.selectedPrograms);
-
     this.setState({
       selectedPrograms: selectedPrograms
     });
@@ -107,6 +104,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
             </div>
             <div className="cell medium-10">
               <FilterBox formSubmitHandler={this.formSubmitHandler} resetDataHandler={this.resetDataHandler} />
+              <p style={{"color" : "red", "fontWeight" : "bold"}}>Press Submit to apply all selected filtering.</p>
               <Results resultSet={this.state.resultSet} />
             </div>
           </div>
