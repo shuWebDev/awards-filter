@@ -69,7 +69,13 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     return;
   }
 
-  
+  resetDataHandler = (event: React.FormEvent<HTMLInputElement>) => {
+    this.setState({
+      resultSet: this.state.awardData
+    });
+    return;
+  }
+
   componentDidMount = () => {
     // NOTE: load our initial data
     UtilServices.loadAwards()
@@ -85,19 +91,34 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
   }
 
   render = () => {
-    return (
-      <main>
+    if(this.state.awardData.length && this.state.resultSet.length) {
+      return (
+        <main>
+          <div className="grid-x grid-margin-x">
+            <div className="cell medium-2">
+              <Programs programList={this.state.programs} />
+            </div>
+            <div className="cell medium-10">
+              <FilterBox formSubmitHandler={this.formSubmitHandler} resetDataHandler={this.resetDataHandler} />
+              <Results resultSet={this.state.resultSet} />
+            </div>
+          </div>
+        </main>
+      )
+    } else {
+      return (
+        <main>
         <div className="grid-x grid-margin-x">
           <div className="cell medium-2">
-            <Programs programList={this.state.programs} />
+            <p>Loading...</p>
           </div>
           <div className="cell medium-10">
-            <FilterBox formSubmitHandler={this.formSubmitHandler}  />
-            <Results resultSet={this.state.resultSet} />
+            <p>Loading...</p>
           </div>
         </div>
       </main>
-    )
+      )
+    }
   }
 }
 

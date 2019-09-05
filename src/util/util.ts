@@ -1,6 +1,6 @@
 ///<reference path='../../typings/app.d.ts'/>
 
-export async function loadAwards():Promise<Services.AwardData> {
+export async function loadAwards():Promise<Services.AwardData<string|number|boolean|object>> {
   // NOTE: relative to local public folder
   return await fetch("/academic-award.json")
   .then((response:any) => {
@@ -11,7 +11,7 @@ export async function loadAwards():Promise<Services.AwardData> {
   });
 }
 
-export function populatePrograms(dataToSearch:Services.AwardData[]):string[] {
+export function populatePrograms(dataToSearch:Services.AwardData<string|number|boolean|object>[]):string[] {
   let extractedProgramList:string[] = [];
   for(let a in dataToSearch) {
     if(!extractedProgramList.includes(dataToSearch[a].eligibilityProgram)) {

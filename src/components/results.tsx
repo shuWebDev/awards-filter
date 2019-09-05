@@ -3,7 +3,7 @@ import * as UtilServices from '../util/util';
 
 class Results extends React.Component<Services.ResultsProps> {
 
-  displayResults = (resultSet:Services.AwardData[]) => {
+  displayResults = (resultSet:Services.AwardData<string|number|boolean|object>[]) => {
     let listItems = [];
     for(let i=0; i<resultSet.length; i++) {
       listItems.push(<li key={`item-${i}`}>{UtilServices.prop(resultSet[i], "name")}</li>);

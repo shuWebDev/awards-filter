@@ -14,9 +14,8 @@ declare namespace Services {
   }
 
   interface FilterBox {
-    //filterBoxText: string, 
-    //filterBoxChangeHandler: function,
-    formSubmitHandler: function
+    formSubmitHandler: function,
+    resetDataHandler: function
   }
 
   interface ProgramProps {
@@ -27,7 +26,7 @@ declare namespace Services {
     resultSet: Services.AwardData[]
   }
 
-  interface AwardData {
+  interface AwardData<TValue> {
     accountType: string,
     aidType: string,
     amount: string,
@@ -49,7 +48,8 @@ declare namespace Services {
     studentStatus: string[],
     tags: string[],
     url: string,
-    uuid: string
+    uuid: string,
+    [key: string]: TValue;
   }
 
   /*interface AwardDataSearchable {
