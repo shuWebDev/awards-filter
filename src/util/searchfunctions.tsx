@@ -2,19 +2,33 @@
 import * as UtilServices from "./util";
 
 // NOTE: our master filtering function, calls more specific functions to do more granular filtering of the data
-function generateResultListing (awardData:Services.AwardData<string|number|boolean|object>[], filterBoxText:string, selectedProgram?:string) {
+function generateResultListing (awardData:Services.AwardData<string|number|boolean|object>[], filterBoxText:string, selectedPrograms:string[]) {
   // NOTE: our final result set after all filters applied
   let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = [];
-  // NOTE: filter by text string
-  returnableResultSet = searchByText(awardData,filterBoxText);
-  // TODO: filter by Program/Category
+  
+  // NOTE: Precedence of search:
+  // 1. Left-side Category (Program)
+  // 2. Filter Textbox String
+  // 3. Amount Range (determined by sliders, coming soon)
+  
+  // NOTE: filter by category
+  //returnableResultSet = searchByProgram(awardData,selectedPrograms);
+  // NOTE: filter those results by text string
+  returnableResultSet = searchByText(returnableResultSet,filterBoxText);
+
   // TODO: filter by award dollar value range
 
   return returnableResultSet;
 }
 
+function searchByProgram(awardData:Services.AwardData<string|number|boolean|object>[], selectedProgram:string[]) {
+  let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = [];
+
+  return returnableResultSet;
+}
+
 // NOTE: filter results that contain a (string) property that matches a string from an input box
-function searchByText(awardData:Services.AwardData<string|number|boolean|object>[], filterBoxText:string, selectedProgram?:string) { 
+function searchByText(awardData:Services.AwardData<string|number|boolean|object>[], filterBoxText:string) { 
  // NOTE: our return set
  let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = [];
  filterBoxText = filterBoxText.toLowerCase();
@@ -40,5 +54,7 @@ function searchByText(awardData:Services.AwardData<string|number|boolean|object>
 
  return returnableResultSet; // NOTE: we will end up returning an object array with the records that match what we are looking for
 }
+
+
 
 export { generateResultListing }

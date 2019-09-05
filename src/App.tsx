@@ -14,38 +14,11 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
 
     this.state = {
       programs: [],
+      selectedPrograms: [],
       awardData: [],
-      //awardDataSearchable: [],
       resultSet: [],
-      //filterBoxText: ""
     }
-
   }
-
-  // NOTE: handles control of value change in filter text box
-  /*handleFilterChange = (event: React.FormEvent<HTMLInputElement>) => {
-    this.setState({ 
-      filterBoxText: event.currentTarget.value
-    });
-    // NOTE: if filter box isnt empty
-    if(this.state.filterBoxText !== "") {
-      // NOTE: make sure we have a result set
-      if(this.state.resultSet.length) {
-        let filterByTextResultSet = generateResultListing(this.state.resultSet, this.state.filterBoxText);
-        this.setState({
-          resultSet: filterByTextResultSet
-        });
-      }
-    } else {
-      // NOTE: we have nothing to filter by so reset the resultSet back to all records
-      
-      console.log("empty textbox");
-      this.setState({
-        resultSet: this.state.awardData 
-      });
-    }
-    return;
-  }*/
 
   // NOTE: handles form "submission"
   formSubmitHandler = (event: React.FormEvent<HTMLInputElement>) => {
@@ -54,7 +27,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     let filterBox = document.querySelector("#filterbox-text") as HTMLInputElement;
     let filterBoxText = filterBox.value;
     if((this.state.resultSet.length) && (filterBoxText !== "")) {
-      let filterByTextResultSet = generateResultListing(this.state.resultSet, filterBoxText);
+      let filterByTextResultSet = generateResultListing(this.state.resultSet, filterBoxText, this.state.selectedPrograms);
       this.setState({
         resultSet: filterByTextResultSet
       });
@@ -76,6 +49,8 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     return;
   }
 
+  
+
   componentDidMount = () => {
     // NOTE: load our initial data
     UtilServices.loadAwards()
@@ -90,13 +65,41 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     });
   }
 
+  programCheckboxHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // NOTE: inspect the incoming checkbox value
+    //let value = event.target.value;
+    let selectedPrograms = this.state.selectedPrograms;
+    console.log(`Target Value: ${event.target.value}`);
+    if(event.target.checked) {
+      // NOTE: check the list of current checked programs/categories
+      if(!selectedPrograms.includes(event.target.value)) {
+        // NOTE: if it's not already in the list, add it
+        console.log(`selectedPrograms does not include ${event.target.value}`);
+        selectedPrograms.push(event.target.value);
+      } 
+    } else {
+      // NOTE: if the box is now unchecked, see if the now unchecked program/category is in our list of active filters 
+      if(selectedPrograms.includes(event.target.value)) {
+        // NOTE: remove it from the list
+        console.log(`selectedPrograms includes ${event.target.value}`);
+        selectedPrograms.splice(selectedPrograms.indexOf(event.target.value), 1);
+      }
+    }
+    
+    this.setState({
+      selectedPrograms: selectedPrograms
+    });
+
+    return;
+  }
+
   render = () => {
     if(this.state.awardData.length && this.state.resultSet.length) {
       return (
         <main>
           <div className="grid-x grid-margin-x">
             <div className="cell medium-2">
-              <Programs programList={this.state.programs} />
+              <Programs programList={this.state.programs} programCheckboxHandler={this.programCheckboxHandler} />
             </div>
             <div className="cell medium-10">
               <FilterBox formSubmitHandler={this.formSubmitHandler} resetDataHandler={this.resetDataHandler} />

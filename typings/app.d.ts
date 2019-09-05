@@ -7,10 +7,9 @@ declare namespace Services {
 
   interface AppState {
     programs: string[],
+    selectedPrograms: string[],
     awardData: Services.AwardData[],
-    //filterBoxText: string,
     resultSet: Services.AwardData[],
-    //awardDataSearchable: Services.AwardDataSearchable[]
   }
 
   interface FilterBox {
@@ -19,7 +18,8 @@ declare namespace Services {
   }
 
   interface ProgramProps {
-    programList: string[] | undefined
+    programList: string[] | undefined,
+    programCheckboxHandler: function
   }
 
   interface ResultsProps {
@@ -51,22 +51,5 @@ declare namespace Services {
     uuid: string,
     [key: string]: TValue;
   }
-
-  /*interface AwardDataSearchable {
-    accountType: string;
-    aidType: string;
-    amount: string;
-    deadline: string;
-    description: string;
-    eligibilityProgram: string;
-    eligibilityRequirements: string; 
-    name: string;
-    notes: string;
-    renewalRequirements: string;
-    selectionBody: string;
-    studentStatus: string;
-    tags: string;
-    
-  }*/
 }
 

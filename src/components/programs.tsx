@@ -5,11 +5,12 @@ class Programs extends React.Component<Services.ProgramProps> {
 
   generateProgramList = (programList:string[]) => {
     let generatedList = [];
-    let key = Date.now();
     for(let program in programList) {
-      // NOTE: bring in a UUID package to assign UUIDs when a key or ID is needed?
-      key++;
-      generatedList.push(<li key={key}><a href="# ">{programList[program]}</a></li>);
+      generatedList.push(
+        <div key={`${programList[program]}`}>
+          <input type="checkbox" id={`${programList[program]}`} name={programList[program]} onClick={this.props.programCheckboxHandler} defaultValue={programList[program]} /><span> {programList[program]}</span>
+        </div>
+      );
     }
     return generatedList;
   }
@@ -19,10 +20,9 @@ class Programs extends React.Component<Services.ProgramProps> {
       return (
         <React.Fragment>
         <h3>Programs</h3>
-        <p>(based on the current result set)</p>
-          <ul className="no-bullet">
+          <aside>
             {this.generateProgramList(this.props.programList)}
-          </ul>
+          </aside>
         </React.Fragment>
       )
     } else {
