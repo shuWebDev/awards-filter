@@ -17,6 +17,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       selectedPrograms: [],
       awardData: [],
       resultSet: [],
+      filterBoxText: ""
     }
   }
 
@@ -35,7 +36,8 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       // NOTE: we have nothing to filter by so reset the resultSet to initial
       if(filterBoxText === "") {
         this.setState({
-          resultSet: this.state.awardData 
+          resultSet: this.state.awardData,
+          filterBoxText: filterBoxText 
         });
       }
     }
@@ -69,23 +71,25 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     // NOTE: inspect the incoming checkbox value
     //let value = event.target.value;
     let selectedPrograms = this.state.selectedPrograms;
-    console.log(`Target Value: ${event.target.value}`);
+    //console.log(`Target Value: ${event.target.value}`);
     if(event.target.checked) {
       // NOTE: check the list of current checked programs/categories
       if(!selectedPrograms.includes(event.target.value)) {
         // NOTE: if it's not already in the list, add it
-        console.log(`selectedPrograms does not include ${event.target.value}`);
+        //console.log(`selectedPrograms does not include ${event.target.value}`);
         selectedPrograms.push(event.target.value);
       } 
     } else {
       // NOTE: if the box is now unchecked, see if the now unchecked program/category is in our list of active filters 
       if(selectedPrograms.includes(event.target.value)) {
         // NOTE: remove it from the list
-        console.log(`selectedPrograms includes ${event.target.value}`);
+        //console.log(`selectedPrograms includes ${event.target.value}`);
         selectedPrograms.splice(selectedPrograms.indexOf(event.target.value), 1);
       }
     }
     
+    //let filterByProgramResultSet = generateResultListing(this.state.resultSet, this.state.filterBoxText, this.state.selectedPrograms);
+
     this.setState({
       selectedPrograms: selectedPrograms
     });

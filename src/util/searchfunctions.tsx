@@ -12,20 +12,43 @@ function generateResultListing (awardData:Services.AwardData<string|number|boole
   // 3. Amount Range (determined by sliders, coming soon)
   
   // NOTE: filter by category
-  //returnableResultSet = searchByProgram(awardData,selectedPrograms);
+  returnableResultSet = searchByProgram(awardData,selectedPrograms);
   // NOTE: filter those results by text string
-  returnableResultSet = searchByText(returnableResultSet,filterBoxText);
+  //returnableResultSet = searchByText(returnableResultSet,filterBoxText);
 
   // TODO: filter by award dollar value range
 
   return returnableResultSet;
 }
 
-function searchByProgram(awardData:Services.AwardData<string|number|boolean|object>[], selectedProgram:string[]) {
+
+
+function searchByProgram(awardData:Services.AwardData<string|number|boolean|object>[], selectedPrograms:string[]) {
   let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = [];
+
+  // NOTE: cycle through the records
+  console.log(selectedPrograms.length);
+  if(selectedPrograms.length) {
+    for(let i=0; i<awardData.length; i++) {
+      // NOTE: see if any of our selected programs match what the eligibility program is for this record
+      for(let program in selectedPrograms) {
+        // NOTE: if we find a match
+        if(awardData[i].eligibilityProgram === selectedPrograms[program]) {
+          // NOTE: push the record to the result set, stop checking if other programs match, and break out to check the next record 
+          returnableResultSet.push(awardData[i]);
+          break;
+        }
+      }
+    }
+  } else {
+    // NOTE: in this case user unchecks all program category boxes, set results back to all records
+    returnableResultSet = awardData;
+  }
 
   return returnableResultSet;
 }
+
+
 
 // NOTE: filter results that contain a (string) property that matches a string from an input box
 function searchByText(awardData:Services.AwardData<string|number|boolean|object>[], filterBoxText:string) { 

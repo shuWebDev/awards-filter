@@ -10,6 +10,7 @@ declare namespace Services {
     selectedPrograms: string[],
     awardData: Services.AwardData[],
     resultSet: Services.AwardData[],
+    filterBoxText: string
   }
 
   interface FilterBox {
