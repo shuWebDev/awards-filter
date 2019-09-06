@@ -10,8 +10,8 @@ declare namespace Services {
   }
 
   interface FilterBox {
-    formSubmitHandler: function,
-    resetDataHandler: function
+    filterBoxChangeHandler: function,
+    filterBoxText: string
   }
 
   interface ProgramProps {

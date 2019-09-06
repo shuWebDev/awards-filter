@@ -8,7 +8,7 @@ class Programs extends React.Component<Services.ProgramProps> {
     for(let program in programList) {
       generatedList.push(
         <div key={`${programList[program]}`}>
-          <input type="checkbox" id={`${programList[program]}`} name={programList[program]} onClick={this.props.programCheckboxHandler} defaultValue={programList[program]} /><label> {programList[program]}</label>
+          <input type="checkbox" id={`${programList[program]}`} className="programs-checkbox" name={programList[program]} onClick={this.props.programCheckboxHandler} defaultValue={programList[program]} /><label> {programList[program]}</label>
         </div>
       );
     }

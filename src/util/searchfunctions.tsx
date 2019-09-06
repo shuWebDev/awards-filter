@@ -12,9 +12,10 @@ function generateResultListing (awardData:Services.AwardData<string|number|boole
   // 3. Amount Range (determined by sliders, coming soon)
   
   // NOTE: filter by category
+  
   returnableResultSet = searchByProgram(awardData,selectedPrograms);
   // NOTE: filter those results by text string
-  //returnableResultSet = searchByText(returnableResultSet,filterBoxText);
+  returnableResultSet = searchByText(returnableResultSet,filterBoxText);
 
   // TODO: filter by award dollar value range
 
@@ -26,8 +27,9 @@ function generateResultListing (awardData:Services.AwardData<string|number|boole
 function searchByProgram(awardData:Services.AwardData<string|number|boolean|object>[], selectedPrograms:string[]) {
   let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = [];
 
+  
   // NOTE: cycle through the records
-  console.log(selectedPrograms.length);
+  //console.log(selectedPrograms.length);
   if(selectedPrograms.length) {
     for(let i=0; i<awardData.length; i++) {
       // NOTE: see if any of our selected programs match what the eligibility program is for this record

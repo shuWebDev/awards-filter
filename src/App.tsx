@@ -33,34 +33,18 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     });
   }
 
-  // NOTE: handles form "submission"
-  // NOTE: should handle application of all filtering at once
-  formSubmitHandler = (event: React.FormEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    // NOTE: initially, resultSet is all records, so to prevent changing the base data set, awardData which is our gold copy from the fetch, we work with the resultSet, also so we can apply multiple filters to the same data set 
-    // NOTE: move handling of filterbox value changes to its own event handler that will update in state as the value changes, no actual calls to filtering here, save that for Submit button's handler
-    let filterBox = document.querySelector("#filterbox-text") as HTMLInputElement;
-    let filterBoxText = filterBox.value;
-    if((this.state.resultSet.length) && (filterBoxText !== "")) {
-      let filterByTextResultSet = generateResultListing(this.state.resultSet, filterBoxText, this.state.selectedPrograms);
-      this.setState({
-        resultSet: filterByTextResultSet
-      });
-    } else {
-      // NOTE: we have nothing to filter by so reset the resultSet to initial
-      if(filterBoxText === "") {
-        this.setState({
-          resultSet: this.state.awardData,
-          filterBoxText: filterBoxText 
-        });
-      }
-    }
-    return;
-  }
-
   resetDataHandler = (event: React.FormEvent<HTMLInputElement>) => {
+    // NOTE: clear all checked Program boxes
+    
+    let checkboxes:HTMLInputElement[] = Array.from(document.querySelectorAll<HTMLInputElement>(".programs-checkbox"));
+
+    for(let i=0; i<checkboxes.length; i++) {
+      checkboxes[i].checked = false;
+    }
+    
     this.setState({
-      resultSet: this.state.awardData
+      resultSet: this.state.awardData,
+      selectedPrograms: []
     });
     return;
   }
@@ -94,20 +78,50 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     return;
   }
 
+
+  filterBoxChangeHandler = (event: React.FormEvent<HTMLInputElement>) => {
+    this.setState({
+      filterBoxText: (event.target as HTMLInputElement).value
+    });
+
+    return;
+  }
+
+  // NOTE: handles form "submission"
+  // NOTE: should handle application of all filtering at once
+  formSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    let returnableResultSet:Services.AwardData<string|number|object|boolean>[];
+
+    // NOTE: send the data off to the filtering function to be filtered
+    returnableResultSet = generateResultListing(this.state.awardData, this.state.filterBoxText, this.state.selectedPrograms);
+
+    this.setState({
+      resultSet: returnableResultSet
+    });
+
+    return;
+  }
+
   render = () => {
-    if(this.state.awardData.length && this.state.resultSet.length) {
+    if(this.state.awardData.length) {
       return (
         <main>
-          <div className="grid-x grid-margin-x">
-            <div className="cell medium-2">
-              <Programs programList={this.state.programs} programCheckboxHandler={this.programCheckboxHandler} />
+          <form onSubmit={this.formSubmitHandler}>
+            <div className="grid-x grid-margin-x">
+              <div className="cell medium-2">
+                <Programs programList={this.state.programs} programCheckboxHandler={this.programCheckboxHandler} />
+              </div>
+              <div className="cell medium-10">
+                <FilterBox filterBoxChangeHandler={this.filterBoxChangeHandler} filterBoxText={this.state.filterBoxText} />
+                <input className="button cell medium-1" type="submit" value="Submit" />
+                <input id="filter-reset" type="button" className="button cell medium-1" onClick={this.resetDataHandler} defaultValue="Reset All" />
+                <p style={{"color" : "red", "fontWeight" : "bold"}}>Press Submit to apply all selected filtering.</p>
+                <Results resultSet={this.state.resultSet} />
+              </div>
             </div>
-            <div className="cell medium-10">
-              <FilterBox formSubmitHandler={this.formSubmitHandler} resetDataHandler={this.resetDataHandler} />
-              <p style={{"color" : "red", "fontWeight" : "bold"}}>Press Submit to apply all selected filtering.</p>
-              <Results resultSet={this.state.resultSet} />
-            </div>
-          </div>
+          </form>
         </main>
       )
     } else {
