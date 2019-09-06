@@ -19,7 +19,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       awardData: [],
       resultSet: [],
       filterBoxText: "",
-      awardAmountBox: 500
+      awardAmountBox: 0
     }
   }
 
@@ -47,7 +47,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     this.setState({
       resultSet: this.state.awardData,
       selectedPrograms: [],
-      awardAmountBox: 500
+      awardAmountBox: 0
     });
     return;
   }
@@ -128,8 +128,14 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
                 <Programs programList={this.state.programs} programCheckboxHandler={this.programCheckboxHandler} />
               </div>
               <div className="cell medium-10">
-                <FilterBox filterBoxChangeHandler={this.filterBoxChangeHandler} filterBoxText={this.state.filterBoxText} />
-                <AwardAmount awardAmountChangeHandler={this.awardAmountChangeHandler} awardAmount={this.state.awardAmountBox} />
+                <div className="grid-x grid-margin-x">
+                  <div className="cell medium-8">
+                    <FilterBox filterBoxChangeHandler={this.filterBoxChangeHandler} filterBoxText={this.state.filterBoxText} />
+                  </div>
+                  <div className="cell medium-3">
+                    <AwardAmount awardAmountChangeHandler={this.awardAmountChangeHandler} awardAmount={this.state.awardAmountBox} />
+                  </div>
+                </div>
                 <input className="button cell medium-1" type="submit" value="Submit" />
                 <input id="filter-reset" type="button" className="button cell medium-1" onClick={this.resetDataHandler} defaultValue="Reset All" />
                 <p style={{"color" : "red", "fontWeight" : "bold"}}>Press Submit to apply all selected filtering.</p>
