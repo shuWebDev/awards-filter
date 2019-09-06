@@ -2,22 +2,21 @@
 import * as UtilServices from "./util";
 
 // NOTE: our master filtering function, calls more specific functions to do more granular filtering of the data
-function generateResultListing (awardData:Services.AwardData<string|number|boolean|object>[], filterBoxText:string, selectedPrograms:string[]) {
+function generateResultListing (awardData:Services.AwardData<string|number|boolean|object>[], filterBoxText:string, selectedPrograms:string[], minAwardAmount:number) {
   // NOTE: our final result set after all filters applied
   let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = [];
   
   // NOTE: Precedence of search:
   // 1. Left-side Category (Program)
   // 2. Filter Textbox String
-  // 3. Amount Range (determined by sliders, coming soon)
+  // 3. Amount
   
   // NOTE: filter by category
-  
   returnableResultSet = searchByProgram(awardData,selectedPrograms);
+  // NOTE: filter by minimum amount 
+  returnableResultSet = searchByAmount(returnableResultSet, minAwardAmount);
   // NOTE: filter those results by text string
   returnableResultSet = searchByText(returnableResultSet,filterBoxText);
-
-  // TODO: filter by award dollar value range
 
   return returnableResultSet;
 }
@@ -80,6 +79,30 @@ function searchByText(awardData:Services.AwardData<string|number|boolean|object>
  return returnableResultSet; // NOTE: we will end up returning an object array with the records that match what we are looking for
 }
 
+function searchByAmount(awardData:Services.AwardData<string|number|boolean|object>[], minAwardAmount:number) {
+  let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = []; 
+
+  for(let i=0; i<awardData.length; i++) {
+    // NOTE: value is a string that can either be numeric or "variable"
+    
+    // NOTE: if the value is a number, test if it fits what we need
+    if(typeof awardData[i].amount === "number") {
+      if(parseInt(awardData[i].amount) >= minAwardAmount) {
+        returnableResultSet.push(awardData[i]);
+      }
+    } else {
+      // NOTE: add the variable ones in too if they are the same category, they still may be relevant
+      console.log("variable");
+      if(typeof awardData[i].amount === "string") {
+        if(awardData[i].amount.toLowerCase() === "variable") {
+          returnableResultSet.push(awardData[i]);
+        }
+      }
+    } 
+  }
+
+  return returnableResultSet;
+}
 
 
 export { generateResultListing }

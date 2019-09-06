@@ -6,7 +6,8 @@ declare namespace Services {
     selectedPrograms: string[],
     awardData: Services.AwardData[],
     resultSet: Services.AwardData[],
-    filterBoxText: string
+    filterBoxText: string,
+    awardAmountBox: number
   }
 
   interface FilterBox {
@@ -21,6 +22,11 @@ declare namespace Services {
 
   interface ResultsProps {
     resultSet: Services.AwardData[]
+  }
+
+  interface AwardAmountProps {
+    awardAmountChangeHandler: function,
+    awardAmount: number
   }
 
   interface AwardData<TValue> {

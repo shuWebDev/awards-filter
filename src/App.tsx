@@ -3,6 +3,7 @@ import * as React from 'react';
 import Programs from './components/programs';
 import Results from './components/results';
 import FilterBox from './components/filterbox';
+import AwardAmount from './components/awardamount';
 import * as UtilServices from './util/util';
 import { generateResultListing } from './util/searchfunctions';
 
@@ -17,7 +18,8 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       selectedPrograms: [],
       awardData: [],
       resultSet: [],
-      filterBoxText: ""
+      filterBoxText: "",
+      awardAmountBox: 500
     }
   }
 
@@ -44,7 +46,8 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     
     this.setState({
       resultSet: this.state.awardData,
-      selectedPrograms: []
+      selectedPrograms: [],
+      awardAmountBox: 500
     });
     return;
   }
@@ -87,6 +90,14 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     return;
   }
 
+  awardAmountChangeHandler = (event: React.FormEvent<HTMLInputElement>) => {
+    this.setState({
+      // NOTE: since a numeric input's value is actually a string, we need to parse the numeric value to work with it
+      awardAmountBox: parseInt((event.target as HTMLInputElement).value)
+    });
+    return;
+  }
+
   // NOTE: handles form "submission"
   // NOTE: should handle application of all filtering at once
   formSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
@@ -95,7 +106,9 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     let returnableResultSet:Services.AwardData<string|number|object|boolean>[];
 
     // NOTE: send the data off to the filtering function to be filtered
-    returnableResultSet = generateResultListing(this.state.awardData, this.state.filterBoxText, this.state.selectedPrograms);
+    let filterSet = [this.state.awardData, this.state.filterBoxText, this.state.selectedPrograms, this.state.awardAmountBox];
+    
+    returnableResultSet = generateResultListing(this.state.awardData, this.state.filterBoxText, this.state.selectedPrograms, this.state.awardAmountBox);
 
     this.setState({
       resultSet: returnableResultSet
@@ -108,6 +121,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     if(this.state.awardData.length) {
       return (
         <main>
+          <h2>Filter Academic Awards</h2>
           <form onSubmit={this.formSubmitHandler}>
             <div className="grid-x grid-margin-x">
               <div className="cell medium-2">
@@ -115,9 +129,11 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
               </div>
               <div className="cell medium-10">
                 <FilterBox filterBoxChangeHandler={this.filterBoxChangeHandler} filterBoxText={this.state.filterBoxText} />
+                <AwardAmount awardAmountChangeHandler={this.awardAmountChangeHandler} awardAmount={this.state.awardAmountBox} />
                 <input className="button cell medium-1" type="submit" value="Submit" />
                 <input id="filter-reset" type="button" className="button cell medium-1" onClick={this.resetDataHandler} defaultValue="Reset All" />
                 <p style={{"color" : "red", "fontWeight" : "bold"}}>Press Submit to apply all selected filtering.</p>
+                <hr />
                 <Results resultSet={this.state.resultSet} />
               </div>
             </div>
@@ -129,9 +145,6 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
         <main>
         <div className="grid-x grid-margin-x">
           <div className="cell medium-2">
-            <p>Loading...</p>
-          </div>
-          <div className="cell medium-10">
             <p>Loading...</p>
           </div>
         </div>
