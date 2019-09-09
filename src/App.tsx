@@ -124,15 +124,15 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
           <h2>Filter Academic Awards</h2>
           <form onSubmit={this.formSubmitHandler}>
             <div className="grid-x grid-margin-x">
-              <div className="cell medium-2">
+              <div className="cell medium-3">
                 <Programs programList={this.state.programs} programCheckboxHandler={this.programCheckboxHandler} />
               </div>
-              <div className="cell medium-10">
+              <div className="cell medium-9">
                 <div className="grid-x grid-margin-x">
                   <div className="cell medium-8">
                     <FilterBox filterBoxChangeHandler={this.filterBoxChangeHandler} filterBoxText={this.state.filterBoxText} />
                   </div>
-                  <div className="cell medium-3">
+                  <div className="cell medium-2">
                     <AwardAmount awardAmountChangeHandler={this.awardAmountChangeHandler} awardAmount={this.state.awardAmountBox} />
                   </div>
                 </div>

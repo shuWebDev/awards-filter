@@ -16,7 +16,7 @@ class Results extends React.Component<Services.ResultsProps> {
       // NOTE: push the record into the list items array
       listItems.push(
         <div key={`item-${i}`}>
-          <h3>{UtilServices.prop(resultSet[i], "name")}</h3>
+          <h3><a href={UtilServices.prop(resultSet[i], "url")} target="_blank" rel="noreferer noopener" >{UtilServices.prop(resultSet[i], "name")}</a></h3>
           <p>{description}</p>
           <ul>
             <li><strong>Account Type:</strong> {UtilServices.prop(resultSet[i], "accountType")}</li>
