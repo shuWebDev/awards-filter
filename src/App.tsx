@@ -25,6 +25,9 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
 
   componentDidMount = () => {
     // NOTE: load our initial data
+    if(typeof dataPath !== "undefined") {
+      console.log(dataPath);
+    }
     UtilServices.loadAwards()
     .then((response:any) => {
       this.setState({
@@ -106,7 +109,6 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     let returnableResultSet:Services.AwardData<string|number|object|boolean>[];
 
     // NOTE: send the data off to the filtering function to be filtered
-    let filterSet = [this.state.awardData, this.state.filterBoxText, this.state.selectedPrograms, this.state.awardAmountBox];
     
     returnableResultSet = generateResultListing(this.state.awardData, this.state.filterBoxText, this.state.selectedPrograms, this.state.awardAmountBox);
 
@@ -121,24 +123,25 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     if(this.state.awardData.length) {
       return (
         <main>
-          <h2>Filter Academic Awards</h2>
           <form onSubmit={this.formSubmitHandler}>
             <div className="grid-x grid-margin-x">
-              <div className="cell medium-3">
+              <div className="cell medium-4">
                 <Programs programList={this.state.programs} programCheckboxHandler={this.programCheckboxHandler} />
               </div>
-              <div className="cell medium-9">
+              <div className="cell medium-8">
                 <div className="grid-x grid-margin-x">
-                  <div className="cell medium-8">
+                  <div className="cell medium-6">
                     <FilterBox filterBoxChangeHandler={this.filterBoxChangeHandler} filterBoxText={this.state.filterBoxText} />
                   </div>
-                  <div className="cell medium-2">
+                  <div className="cell medium-4">
                     <AwardAmount awardAmountChangeHandler={this.awardAmountChangeHandler} awardAmount={this.state.awardAmountBox} />
                   </div>
                 </div>
-                <input className="button cell medium-1" type="submit" value="Submit" />
-                <input id="filter-reset" type="button" className="button cell medium-1" onClick={this.resetDataHandler} defaultValue="Reset All" />
-                <p style={{"color" : "red", "fontWeight" : "bold"}}>Press Submit to apply all selected filtering.</p>
+                <div className="button-group">
+                  <input className="button" type="submit" value="Submit" />
+                  <input id="filter-reset" type="button" className="button" onClick={this.resetDataHandler} defaultValue="Reset All" />
+                </div>
+                <p><strong>Press Submit to apply all selected filtering.</strong></p>
                 <hr />
                 <Results resultSet={this.state.resultSet} />
               </div>
@@ -150,8 +153,10 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       return (
         <main>
         <div className="grid-x grid-margin-x">
-          <div className="cell medium-2">
-            <p>Loading...</p>
+          <div className="cell medium-12">
+            <div className="panel">
+              <h3><i className="fas fa-sync fa-spin"></i>&nbsp;Loading content...</h3>
+            </div>
           </div>
         </div>
       </main>

@@ -1,3 +1,5 @@
+declare var dataPath: string;
+
 declare namespace Services {
   interface AppProps {}
 
