@@ -1,6 +1,5 @@
 ///<reference path='../../typings/app.d.ts'/>
 
-import { isTemplateElement } from "@babel/types";
 
 export async function loadAwards():Promise<Services.AwardData<string|number|boolean|object>> {
   // NOTE: relative to local public folder
