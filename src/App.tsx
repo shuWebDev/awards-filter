@@ -19,6 +19,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       awardData: [],
       resultSet: [],
       filterBoxText: "",
+      filterBoxPlaceholder: `ex: "Endowment", "Max", "memorial"...`,
       awardAmountBox: 0
     }
   }
@@ -131,7 +132,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
               <div className="cell medium-8">
                 <div className="grid-x grid-margin-x">
                   <div className="cell medium-6">
-                    <FilterBox filterBoxChangeHandler={this.filterBoxChangeHandler} filterBoxText={this.state.filterBoxText} />
+                    <FilterBox filterBoxChangeHandler={this.filterBoxChangeHandler} filterBoxText={this.state.filterBoxText} filterBoxPlaceholder={this.state.filterBoxPlaceholder} />
                   </div>
                   <div className="cell medium-4">
                     <AwardAmount awardAmountChangeHandler={this.awardAmountChangeHandler} awardAmount={this.state.awardAmountBox} />

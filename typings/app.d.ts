@@ -9,12 +9,14 @@ declare namespace Services {
     awardData: Services.AwardData[],
     resultSet: Services.AwardData[],
     filterBoxText: string,
+    filterBoxPlaceholder: string,
     awardAmountBox: number
   }
 
   interface FilterBox {
     filterBoxChangeHandler: function,
-    filterBoxText: string
+    filterBoxText: string,
+    filterBoxPlaceholder: string
   }
 
   interface ProgramProps {
