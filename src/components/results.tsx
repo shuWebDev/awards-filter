@@ -28,7 +28,7 @@ class Results extends React.Component<Services.ResultsProps> {
           <ul>
             <li><strong>Account Type:</strong> {accountType}</li>
             {(amount.length)? 
-              <li><strong>Amount:</strong> {(amount === "number") ? `$` : ``} {amount}</li> : null}
+              <li><strong>Amount:</strong> {(typeof amount === "number") ? `$` : ``} {amount}</li> : null}
             <li><strong>Deadline:</strong> {formattedDeadline}</li>
             <li><strong>Availability:</strong> {(availability)? "Available" : "Not Currently Available"}</li>
           </ul>
