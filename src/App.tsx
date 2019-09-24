@@ -6,7 +6,7 @@ import FilterBox from './components/filterbox';
 import AwardAmount from './components/awardamount';
 import * as UtilServices from './util/util';
 import { generateResultListing } from './util/searchfunctions';
-
+import styles from './index.module.css';
 
 
 class App extends React.Component<Services.AppProps, Services.AppState> {
@@ -14,6 +14,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     super(props);
 
     this.state = {
+      programFilterDisplayed: false,
       programs: [],
       selectedPrograms: [],
       awardData: [],
@@ -24,11 +25,45 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     }
   }
 
-  componentDidMount = () => {
-    // NOTE: load our initial data
-    if(typeof dataPath !== "undefined") {
-      console.log(dataPath);
+  displayProgramFilter = () => {
+    if(this.state.programFilterDisplayed) {
+      this.setState({
+        programFilterDisplayed: false
+      });
+    } else {
+      this.setState({
+        programFilterDisplayed: true
+      });
+    } 
+  }
+
+  displayBadges = () => {
+    if(this.state.selectedPrograms.length) {
+      let output = [];
+      for(let i=0; i<this.state.selectedPrograms.length; i++) {
+        if((this.state.selectedPrograms.length > 1) && (i < this.state.selectedPrograms.length -1)) {
+          output.push(<li><em>"{this.state.selectedPrograms[i]}"</em>, </li>);
+        } else {
+          output.push(<li><em>"{this.state.selectedPrograms[i]}"</em></li>);
+        }
+      }
+      return (
+      <div>
+        <label>Applied Program Filters:
+          <ul className={styles.pfbadgelist}>
+          {output}
+          </ul>
+        </label>
+      </div>  
+      );
+    } else {
+      return null;
     }
+  }
+
+  componentDidMount = () => {
+  
+    // NOTE: load our initial data
     UtilServices.loadAwards()
     .then((response:any) => {
       this.setState({
@@ -120,37 +155,64 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     return;
   }
 
+  programsFilterCloseHandler = () => {
+    this.setState({
+      programFilterDisplayed: false
+    });
+  }
+
   render = () => {
     if(this.state.awardData.length) {
-      return (
-        <main>
-          <form onSubmit={this.formSubmitHandler}>
-            <div className="grid-x grid-margin-x">
-              <div className="cell medium-4">
-                <Programs programList={this.state.programs} programCheckboxHandler={this.programCheckboxHandler} />
-              </div>
-              <div className="cell medium-8">
-                <div className="grid-x grid-margin-x">
-                  <div className="cell medium-6">
-                    <FilterBox filterBoxChangeHandler={this.filterBoxChangeHandler} filterBoxText={this.state.filterBoxText} filterBoxPlaceholder={this.state.filterBoxPlaceholder} />
-                  </div>
-                  <div className="cell medium-4">
-                    <AwardAmount awardAmountChangeHandler={this.awardAmountChangeHandler} awardAmount={this.state.awardAmountBox} />
-                  </div>
-                </div>
-                <div className="button-group">
-                  <input className="button" type="submit" value="Submit" />
-                  <input id="filter-reset" type="button" className="button" onClick={this.resetDataHandler} defaultValue="Reset All" />
-                </div>
-                <p><strong>Press Submit to apply all selected filtering.</strong></p>
-                <hr />
-                <Results resultSet={this.state.resultSet} />
-              </div>
+      if(this.state.programFilterDisplayed) {
+        {/* Program filter selection screen is active */}
+        return (
+          <div className={`grid-x grid-margin-x`}>
+            <div className="cell medium-12">
+              <Programs programList={this.state.programs} programCheckboxHandler={this.programCheckboxHandler} programsFilterCloseHandler={this.programsFilterCloseHandler} />
             </div>
-          </form>
-        </main>
-      )
+          </div> 
+        )
+      } else {
+        {/* we aren't currently showing the program checkboxes */}
+        const filterBoxProps = {
+          filterBoxChangeHandler: this.filterBoxChangeHandler,
+          filterBoxText: this.state.filterBoxText,
+          filterBoxPlaceholder: this.state.filterBoxPlaceholder
+        };
+        return (
+          <main>
+            <form onSubmit={this.formSubmitHandler}>
+              <div className="grid-x grid-margin-x">
+                <div className="cell medium-12">
+                  <div className="grid-x grid-margin-x">
+                    <div className="cell medium-9 small-12">
+                      <FilterBox filterBoxProps={filterBoxProps} />
+                    </div>
+                    <div className="cell medium-3 small-12">
+                      <AwardAmount awardAmountChangeHandler={this.awardAmountChangeHandler} awardAmount={this.state.awardAmountBox} />
+                    </div>
+                  </div>
+                  <div className="grid-x grid-margin-x">
+                    <div className="small-12 cell">
+                    {(this.state.selectedPrograms.length)? this.displayBadges() : null}
+                    </div>
+                  </div>
+                  <div className="button-group">
+                    <input className="button" type="button" value="Select Programs" onClick={this.displayProgramFilter} />
+                    <input id="filter-reset" type="button" className="button" onClick={this.resetDataHandler} defaultValue="Reset All" />
+                    <input className="button" type="submit" value="Submit" />
+                  </div>
+                  <p><strong>Press Submit to apply all selected filtering.</strong></p>
+                  <hr />
+                  <Results resultSet={this.state.resultSet} />
+                </div>
+              </div>
+            </form>
+          </main>
+        )
+      } 
     } else {
+      {/* default rendering if there is no data yet */}
       return (
         <main>
         <div className="grid-x grid-margin-x">

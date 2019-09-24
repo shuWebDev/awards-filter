@@ -22,9 +22,8 @@ class Results extends React.Component<Services.ResultsProps> {
       
       // NOTE: push the record into the list items array
       listItems.push(
-        <div key={`item-${i}`}>
+        <div key={`item-${i}`} className="callout">
           <h3><a title={name} href={url} rel="noreferer noopener" >{name}</a></h3>
-          <p>{description}</p>
           <ul>
             <li><strong>Account Type:</strong> {accountType}</li>
             {(amount.length)? 

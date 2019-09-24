@@ -4,6 +4,7 @@ declare namespace Services {
   interface AppProps {}
 
   interface AppState {
+    programFilterDisplayed: boolean,
     programs: string[],
     selectedPrograms: string[],
     awardData: Services.AwardData[],
@@ -14,14 +15,17 @@ declare namespace Services {
   }
 
   interface FilterBox {
-    filterBoxChangeHandler: function,
-    filterBoxText: string,
-    filterBoxPlaceholder: string
+    filterBoxProps: {
+      filterBoxChangeHandler: function,
+      filterBoxText: string,
+      filterBoxPlaceholder: string
+    }
   }
 
   interface ProgramProps {
     programList: string[] | undefined,
-    programCheckboxHandler: function
+    programCheckboxHandler: function,
+    programsFilterCloseHandler: function
   }
 
   interface ResultsProps {

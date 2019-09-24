@@ -1,0 +1,40 @@
+#programfilterview {
+  width: 100%;
+}
+
+.programfilter {
+  height: 60vh;
+  width: 80%;
+  overflow-y: scroll;
+}
+
+button.pfbtnapply {
+  margin-left: 2vw;
+  margin-top: 2vh;
+}
+
+button.pfbtnclose { 
+  float: right;
+  font-size: 2rem;
+}
+
+label {
+  font-size: 1.25rem;
+}
+
+label input[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+}
+
+.pfbadgelist {
+  width: 100%;
+  font-size: 1rem;
+  margin-left: 0;
+  color: #048;
+}
+
+.pfbadgelist li {
+  display: inline;
+  list-style-type: none;
+}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import styles from '../index.module.css';
 
 class Programs extends React.Component<Services.ProgramProps> {
 
@@ -20,12 +20,14 @@ class Programs extends React.Component<Services.ProgramProps> {
   render() {
     if(typeof this.props.programList !== 'undefined') {
       return (
-        <React.Fragment>
-        <h3>Programs</h3>
-          <aside>
+        <div id={styles.programfilterview}>
+          <button className={styles.pfbtnclose} onClick={this.props.programsFilterCloseHandler}>&times;</button>
+          <button className={`button ${styles.pfbtnapply}`} onClick={this.props.programsFilterCloseHandler}>Apply Filters &raquo;</button>
+          <h3>Programs</h3>
+          <div className={`${styles.programfilter}`}>
             {this.generateProgramList(this.props.programList)}
-          </aside>
-        </React.Fragment>
+          </div>
+        </div>
       )
     } else {
       return <span>Loading Categories...</span>;
