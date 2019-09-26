@@ -23,7 +23,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       filterBoxPlaceholder: `ex: "Endowment", "Max", "memorial"...`,
       awardAmountBox: 0,
       currentPage: 0,
-      resultsPerPage: 4
+      resultsPerPage: 5
     }
   }
 
@@ -78,7 +78,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     });
   }
 
-  resetDataHandler = (event: React.FormEvent<HTMLInputElement>) => {
+  resetDataHandler = () => {
     // NOTE: clear all checked Program boxes
     
     let checkboxes:HTMLInputElement[] = Array.from(document.querySelectorAll<HTMLInputElement>(".programs-checkbox"));
@@ -175,23 +175,53 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
 
   displayPaginationControls = (numPages:number) => {
     let pageButtons:JSX.Element[] = [];
+    let currentPage:number = this.state.currentPage;
     for(let i=0; i<numPages; i++) {
-      pageButtons.push(<li key={`page-${i}-button`}><button onClick={() => {this.paginationButtonHandler(i)}} aria-label={`Page ${i + 1}`}>{i + 1}</button></li>)
+      if(i === currentPage) {
+        pageButtons.push(<li className="current" key={`page-${i}-button`}><span className="show-for-sr">You are on page </span>{i + 1}</li>);
+      } else {
+        pageButtons.push(<li key={`page-${i}-button`}><button onClick={() => {this.paginationButtonHandler(i)}} aria-label={`Page ${i + 1}`}>{i + 1}</button></li>);
+      }
     }
+
+    // TODO: determine if we need to disable the Prev/Next buttons based on if we are at the beginning/end of the page list to prevent incrementing past the length of the collection
     return (
       <nav aria-label="Pagination">
         <ul className="pagination">
+          <li className="pagination-previous"><button onClick={() => {this.paginationPrevNextHandler(true)}} aria-label="Previous Page">&laquo; Previous <span className="show-for-sr">page</span></button></li>
           {pageButtons}
+          <li className="pagination-next"><button onClick={() => {this.paginationPrevNextHandler(false)}}aria-label="Next Page">Next <span className="show-for-sr">page</span> &raquo;</button></li>
         </ul>
       </nav>
     );
+  }
+
+  paginationPrevNextHandler = (prevOrNext:boolean) => {
+    // NOTE: true = previous action, false = next action
+    let currentPage:number = this.state.currentPage;
+    console.log(`ppn handler: current page - ${currentPage}`);
+    if(prevOrNext) {
+      if(currentPage > 0) {
+        currentPage--;
+      }
+    } else {
+      if(currentPage < this.state.resultSet.length) {
+        currentPage++;
+      }
+    }
+
+    this.setState({
+      currentPage: currentPage
+    });
+
+    return;
   }
 
     // NOTE: Handle a click event to change results page 
   paginationButtonHandler = (index:number) => {
     this.setState({
       currentPage: index
-    }, () => {console.log(`Page Set to: ${index}`);});
+    });
   }
 
 
@@ -229,13 +259,18 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
                     {(this.state.selectedPrograms.length)? this.displayBadges() : null}
                     </div>
                   </div>
-                  <div className="button-group">
-                    <input className="button" type="button" value="Select Programs" onClick={this.displayProgramFilter} />
-                    <input id="filter-reset" type="button" className="button" onClick={this.resetDataHandler} defaultValue="Reset All" />
-                    <input className="button" type="submit" value="Submit" />
+                  <div className="grid-x grid-margin-x">
+                    <div className="cell medium-6 small-12 medium-push-3">
+                      <div className="expanded button-group">
+                        <button className="button" type="button" onClick={this.displayProgramFilter}>Select Program(s)</button>
+                        <button id="filter-reset" type="button" className="button" onClick={this.resetDataHandler}>Reset All</button>
+                        <input className="button" type="submit" value="Submit" />
+                      </div>
+                    </div>
                   </div>
                   <p><strong>Press Submit to apply all selected filtering.</strong></p>
                   <hr />
+                  {this.displayPaginationControls(this.state.resultSet.length)}
                   <Results resultSet={this.state.resultSet[this.state.currentPage]} />
                   {this.displayPaginationControls(this.state.resultSet.length)}
                 </div>

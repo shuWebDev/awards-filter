@@ -24,7 +24,7 @@ class Results extends React.Component<Services.ResultsProps> {
       listItems.push(
         <div key={`item-${i}`} className="callout">
           <h3><a title={name} href={url} rel="noreferer noopener" >{name}</a></h3>
-          <ul>
+          <ul className="no-bullet">
             <li><strong>Account Type:</strong> {accountType}</li>
             {(amount.length)? 
               <li><strong>Amount:</strong> {(typeof amount === "number") ? `$` : ``} {amount}</li> : null}
