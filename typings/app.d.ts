@@ -11,7 +11,9 @@ declare namespace Services {
     resultSet: Services.AwardData[],
     filterBoxText: string,
     filterBoxPlaceholder: string,
-    awardAmountBox: number
+    awardAmountBox: number,
+    resultsPerPage: number,
+    currentPage: number
   }
 
   interface FilterBox {

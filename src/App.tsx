@@ -21,8 +21,31 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       resultSet: [],
       filterBoxText: "",
       filterBoxPlaceholder: `ex: "Endowment", "Max", "memorial"...`,
-      awardAmountBox: 0
+      awardAmountBox: 0,
+      currentPage: 0,
+      resultsPerPage: 10
     }
+  }
+
+  displayPaginationControls = (numPages:number) => {
+    let pageButtons:JSX.Element[] = [];
+    for(let i=0; i<numPages; i++) {
+      pageButtons.push(<li key={`page-${i}-button`}><button onClick={() => {this.paginationButtonHandler(i)}} aria-label={`Page ${i}`}>{i}</button></li>)
+    }
+    return (
+      <nav aria-label="Pagination">
+        <ul className="pagination">
+          {pageButtons}
+        </ul>
+      </nav>
+    );
+  }
+
+    // NOTE: Handle a click event to change results page 
+  paginationButtonHandler = (index:number) => {
+    this.setState({
+      currentPage: index
+    }, () => {console.log(`Page Set to: ${index}`);});
   }
 
   displayProgramFilter = () => {
@@ -42,9 +65,9 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       let output = [];
       for(let i=0; i<this.state.selectedPrograms.length; i++) {
         if((this.state.selectedPrograms.length > 1) && (i < this.state.selectedPrograms.length -1)) {
-          output.push(<li><em>"{this.state.selectedPrograms[i]}"</em>, </li>);
+          output.push(<li key={`badge-${i}`}><em>"{this.state.selectedPrograms[i]}"</em>, </li>);
         } else {
-          output.push(<li><em>"{this.state.selectedPrograms[i]}"</em></li>);
+          output.push(<li key={`badge-${i}`}><em>"{this.state.selectedPrograms[i]}"</em></li>);
         }
       }
       return (
@@ -69,7 +92,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       this.setState({
         awardData: response.data,
         programs: UtilServices.populatePrograms(response.data),
-        resultSet: response.data
+        resultSet: response.data,
       });
     });
   }
@@ -149,7 +172,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     returnableResultSet = generateResultListing(this.state.awardData, this.state.filterBoxText, this.state.selectedPrograms, this.state.awardAmountBox);
 
     this.setState({
-      resultSet: returnableResultSet
+      resultSet: returnableResultSet,
     });
 
     return;
@@ -164,7 +187,6 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
   render = () => {
     if(this.state.awardData.length) {
       if(this.state.programFilterDisplayed) {
-        {/* Program filter selection screen is active */}
         return (
           <div className={`grid-x grid-margin-x`}>
             <div className="cell medium-12">
@@ -173,7 +195,6 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
           </div> 
         )
       } else {
-        {/* we aren't currently showing the program checkboxes */}
         const filterBoxProps = {
           filterBoxChangeHandler: this.filterBoxChangeHandler,
           filterBoxText: this.state.filterBoxText,
@@ -212,7 +233,6 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
         )
       } 
     } else {
-      {/* default rendering if there is no data yet */}
       return (
         <main>
         <div className="grid-x grid-margin-x">
