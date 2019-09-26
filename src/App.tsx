@@ -90,7 +90,8 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       filterBoxText: "",
       resultSet: UtilServices.paginateResults(this.state.awardData, this.state.resultsPerPage),
       selectedPrograms: [],
-      awardAmountBox: 0
+      awardAmountBox: 0,
+      currentPage: 0
     });
     return;
   }
@@ -155,7 +156,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     if(returnableResultSet.length) {
       // NOTE: There is at least one matching record, format the results for pagination and save state
       this.setState({
-        currentPage: 0,
+        //currentPage: 0,
         resultSet: UtilServices.paginateResults(returnableResultSet, this.state.resultsPerPage),
       });
     } else {
@@ -214,19 +215,22 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
   paginationPrevNextHandler = (prevOrNext:boolean) => {
     // NOTE: true = previous action, false = next action
     let currentPage:number = this.state.currentPage;
+    console.log(this.state.resultSet.length);
     if(prevOrNext) {
       if(currentPage > 0) {
+        console.log("prev");
         currentPage--;
       }
     } else {
       if(currentPage < this.state.resultSet.length) {
+        console.log("next");
         currentPage++;
       }
     }
 
     this.setState({
       currentPage: currentPage
-    });
+    }, () => {console.log(this.state.currentPage)});
 
     return;
   }
