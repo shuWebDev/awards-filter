@@ -87,6 +87,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     }
     
     this.setState({
+      filterBoxText: "",
       resultSet: UtilServices.paginateResults(this.state.awardData, this.state.resultsPerPage),
       selectedPrograms: [],
       awardAmountBox: 0
@@ -160,7 +161,6 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     } else {
       // NOTE: There are no matching records
       this.setState({
-        currentPage: 0,
         resultSet: [[]]
       });
     }
@@ -178,7 +178,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     let pageButtons:JSX.Element[] = [];
     let nextButton:JSX.Element = <li></li>, prevButton:JSX.Element = <li></li>;
     let currentPage:number = this.state.currentPage;
-    console.log(`current page: ${currentPage}`);
+    
     for(let i=0; i<numPages; i++) {
       if(i === currentPage) {
         pageButtons.push(<li className="current" key={`page-${i}-button`}><span className="show-for-sr">You are on page </span>{i + 1}</li>);
@@ -214,7 +214,6 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
   paginationPrevNextHandler = (prevOrNext:boolean) => {
     // NOTE: true = previous action, false = next action
     let currentPage:number = this.state.currentPage;
-    console.log(`ppn handler: current page - ${currentPage}`);
     if(prevOrNext) {
       if(currentPage > 0) {
         currentPage--;
