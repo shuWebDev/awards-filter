@@ -8,7 +8,6 @@ import * as UtilServices from './util/util';
 import { generateResultListing } from './util/searchfunctions';
 import styles from './index.module.css';
 
-
 class App extends React.Component<Services.AppProps, Services.AppState> {
   constructor(props:Services.AppProps) {
     super(props);
@@ -95,7 +94,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     return;
   }
 
-  // NOTE: should just handle adding/subtracting program names from state depending on whih ones are checked. No actual call to search methods here
+  // NOTE: just handles adding/subtracting program names from state depending on whih ones are checked. No actual call to search methods here
   programCheckboxHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     // NOTE: inspect the incoming checkbox value
     //let value = event.target.value;
@@ -175,7 +174,9 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
 
   displayPaginationControls = (numPages:number) => {
     let pageButtons:JSX.Element[] = [];
+    let nextButton:JSX.Element = <li></li>, prevButton:JSX.Element = <li></li>;
     let currentPage:number = this.state.currentPage;
+    console.log(`current page: ${currentPage}`);
     for(let i=0; i<numPages; i++) {
       if(i === currentPage) {
         pageButtons.push(<li className="current" key={`page-${i}-button`}><span className="show-for-sr">You are on page </span>{i + 1}</li>);
@@ -184,13 +185,25 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       }
     }
 
+    if(currentPage === 0) {
+       prevButton = <li className="pagination-previous disabled">Previous <span className="show-for-sr">page</span></li>;
+    } else {
+       prevButton = <li className="pagination-previous"><button onClick={() => {this.paginationPrevNextHandler(true)}} aria-label="Previous Page">Previous <span className="show-for-sr">page</span></button></li>;
+    }
+
+    if(currentPage === this.state.resultSet.length - 1) {
+      nextButton = <li className="pagination-next disabled">Next <span className="show-for-sr"> page</span> </li>;
+    } else {
+      nextButton = <li className="pagination-next"><button onClick={() => {this.paginationPrevNextHandler(false)}} aria-label="Next Page">Next <span className="show-for-sr">page</span></button></li>
+    }
+
     // TODO: determine if we need to disable the Prev/Next buttons based on if we are at the beginning/end of the page list to prevent incrementing past the length of the collection
     return (
       <nav aria-label="Pagination">
-        <ul className="pagination">
-          <li className="pagination-previous"><button onClick={() => {this.paginationPrevNextHandler(true)}} aria-label="Previous Page">&laquo; Previous <span className="show-for-sr">page</span></button></li>
+        <ul className="pagination text-center">
+          {prevButton}
           {pageButtons}
-          <li className="pagination-next"><button onClick={() => {this.paginationPrevNextHandler(false)}}aria-label="Next Page">Next <span className="show-for-sr">page</span> &raquo;</button></li>
+          {nextButton}
         </ul>
       </nav>
     );
