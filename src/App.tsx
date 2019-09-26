@@ -18,36 +18,16 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       programs: [],
       selectedPrograms: [],
       awardData: [],
-      resultSet: [],
+      resultSet: [[]],
       filterBoxText: "",
       filterBoxPlaceholder: `ex: "Endowment", "Max", "memorial"...`,
       awardAmountBox: 0,
       currentPage: 0,
-      resultsPerPage: 10
+      resultsPerPage: 4
     }
   }
 
-  displayPaginationControls = (numPages:number) => {
-    let pageButtons:JSX.Element[] = [];
-    for(let i=0; i<numPages; i++) {
-      pageButtons.push(<li key={`page-${i}-button`}><button onClick={() => {this.paginationButtonHandler(i)}} aria-label={`Page ${i}`}>{i}</button></li>)
-    }
-    return (
-      <nav aria-label="Pagination">
-        <ul className="pagination">
-          {pageButtons}
-        </ul>
-      </nav>
-    );
-  }
-
-    // NOTE: Handle a click event to change results page 
-  paginationButtonHandler = (index:number) => {
-    this.setState({
-      currentPage: index
-    }, () => {console.log(`Page Set to: ${index}`);});
-  }
-
+  
   displayProgramFilter = () => {
     if(this.state.programFilterDisplayed) {
       this.setState({
@@ -92,7 +72,8 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       this.setState({
         awardData: response.data,
         programs: UtilServices.populatePrograms(response.data),
-        resultSet: response.data,
+        // NOTE: pre-paginate the results into groups of [resultsPerPage]
+        resultSet: UtilServices.paginateResults(response.data, this.state.resultsPerPage),
       });
     });
   }
@@ -107,7 +88,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     }
     
     this.setState({
-      resultSet: this.state.awardData,
+      resultSet: UtilServices.paginateResults(this.state.awardData, this.state.resultsPerPage),
       selectedPrograms: [],
       awardAmountBox: 0
     });
@@ -171,9 +152,17 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     
     returnableResultSet = generateResultListing(this.state.awardData, this.state.filterBoxText, this.state.selectedPrograms, this.state.awardAmountBox);
 
-    this.setState({
-      resultSet: returnableResultSet,
-    });
+    if(returnableResultSet.length) {
+      // NOTE: There is at least one matching record, format the results for pagination and save state
+      this.setState({
+        resultSet: UtilServices.paginateResults(returnableResultSet, this.state.resultsPerPage),
+      });
+    } else {
+      // NOTE: There are no matching records
+      this.setState({
+        resultSet: [[]]
+      });
+    }
 
     return;
   }
@@ -183,6 +172,28 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       programFilterDisplayed: false
     });
   }
+
+  displayPaginationControls = (numPages:number) => {
+    let pageButtons:JSX.Element[] = [];
+    for(let i=0; i<numPages; i++) {
+      pageButtons.push(<li key={`page-${i}-button`}><button onClick={() => {this.paginationButtonHandler(i)}} aria-label={`Page ${i + 1}`}>{i + 1}</button></li>)
+    }
+    return (
+      <nav aria-label="Pagination">
+        <ul className="pagination">
+          {pageButtons}
+        </ul>
+      </nav>
+    );
+  }
+
+    // NOTE: Handle a click event to change results page 
+  paginationButtonHandler = (index:number) => {
+    this.setState({
+      currentPage: index
+    }, () => {console.log(`Page Set to: ${index}`);});
+  }
+
 
   render = () => {
     if(this.state.awardData.length) {
@@ -225,7 +236,8 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
                   </div>
                   <p><strong>Press Submit to apply all selected filtering.</strong></p>
                   <hr />
-                  <Results resultSet={this.state.resultSet} />
+                  <Results resultSet={this.state.resultSet[this.state.currentPage]} />
+                  {this.displayPaginationControls(this.state.resultSet.length)}
                 </div>
               </div>
             </form>

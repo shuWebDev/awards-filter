@@ -8,7 +8,7 @@ declare namespace Services {
     programs: string[],
     selectedPrograms: string[],
     awardData: Services.AwardData[],
-    resultSet: Services.AwardData[],
+    resultSet: Services.AwardData[][],
     filterBoxText: string,
     filterBoxPlaceholder: string,
     awardAmountBox: number,

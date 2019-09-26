@@ -4,7 +4,7 @@ import * as UtilServices from "./util";
 // NOTE: our master filtering function, calls more specific functions to do more granular filtering of the data
 function generateResultListing (awardData:Services.AwardData<string|number|boolean|object>[], filterBoxText:string, selectedPrograms:string[], minAwardAmount:number) {
   // NOTE: our final result set after all filters applied
-  let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = [];
+  let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = awardData;
   
   // NOTE: Precedence of search:
   // 1. Left-side Category (Program)
@@ -12,11 +12,21 @@ function generateResultListing (awardData:Services.AwardData<string|number|boole
   // 3. Amount
   
   // NOTE: filter by category
-  returnableResultSet = searchByProgram(awardData,selectedPrograms);
+  if(selectedPrograms.length) {
+    //console.log("filter by program ran");
+    returnableResultSet = searchByProgram(awardData,selectedPrograms);
+  }
   // NOTE: filter by minimum amount 
-  returnableResultSet = searchByAmount(returnableResultSet, minAwardAmount);
+  if(minAwardAmount > 0) {
+    //console.log("filter by amount ran");
+    returnableResultSet = searchByAmount(returnableResultSet, minAwardAmount);
+  }
+
   // NOTE: filter those results by text string
-  returnableResultSet = searchByText(returnableResultSet,filterBoxText);
+  if(filterBoxText.length) {
+    //console.log("filter by filterboxtext ran");
+    returnableResultSet = searchByText(returnableResultSet,filterBoxText);
+  }
 
   return returnableResultSet;
 }

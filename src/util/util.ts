@@ -27,6 +27,21 @@ export function populatePrograms(dataToSearch:Services.AwardData<string|number|b
   return extractedProgramList;
 }
 
+export function paginateResults(array:Services.AwardData<string|number|boolean|object>[], chunkSize:number):Services.AwardData<string|number|boolean|object>[][] {
+
+  let result:Services.AwardData<string|number|boolean|object>[][] = [[]];
+  
+  for(let i=0; i<array.length; i++) {
+    const last = result[result.length - 1];
+    if(!last || last.length === chunkSize) {
+      result.push([array[i]]);
+    } else {
+      last.push(array[i]);
+    }
+  }
+
+  return result;
+}
 
 
 // NOTE: given an object and key, returns the key value
