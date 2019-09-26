@@ -154,11 +154,13 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     if(returnableResultSet.length) {
       // NOTE: There is at least one matching record, format the results for pagination and save state
       this.setState({
+        currentPage: 0,
         resultSet: UtilServices.paginateResults(returnableResultSet, this.state.resultsPerPage),
       });
     } else {
       // NOTE: There are no matching records
       this.setState({
+        currentPage: 0,
         resultSet: [[]]
       });
     }
@@ -283,9 +285,9 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
                   </div>
                   <p><strong>Press Submit to apply all selected filtering.</strong></p>
                   <hr />
-                  {this.displayPaginationControls(this.state.resultSet.length)}
+                  {(this.state.resultSet.length)?this.displayPaginationControls(this.state.resultSet.length): null}
                   <Results resultSet={this.state.resultSet[this.state.currentPage]} />
-                  {this.displayPaginationControls(this.state.resultSet.length)}
+                  {(this.state.resultSet.length)?this.displayPaginationControls(this.state.resultSet.length): null}
                 </div>
               </div>
             </form>
