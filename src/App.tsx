@@ -199,8 +199,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
     } else {
       nextButton = <li className="pagination-next"><button onClick={() => {this.paginationPrevNextHandler(false)}} aria-label="Next Page">Next <span className="show-for-sr">page</span></button></li>
     }
-
-    // TODO: determine if we need to disable the Prev/Next buttons based on if we are at the beginning/end of the page list to prevent incrementing past the length of the collection
+    
     return (
       <nav aria-label="Pagination">
         <ul className="pagination text-center">

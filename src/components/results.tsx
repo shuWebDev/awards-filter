@@ -14,11 +14,17 @@ class Results extends React.Component<Services.ResultsProps> {
       let url = UtilServices.prop(resultSet[i], "url");
       let availability = UtilServices.prop(resultSet[i], "available");
       let deadline = UtilServices.prop(resultSet[i], "deadline");
+      let formattedDeadline:string = "";
 
       description = description.replace(/(<([^>]+)>)/ig,"");
       // NOTE: format the deadline date to en-US format
-      let deadlineDate = new Date(deadline);
-      let formattedDeadline = deadlineDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
+      console.log(deadline);
+      if(deadline !== "00:00:00") {
+        let deadlineDate = new Date(deadline);
+        formattedDeadline = deadlineDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
+      } else {
+        formattedDeadline = "Rolling.";
+      }
       
       // NOTE: push the record into the list items array
       listItems.push(
