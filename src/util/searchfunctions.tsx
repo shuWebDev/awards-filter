@@ -103,9 +103,7 @@ function searchByAmount(awardData:Services.AwardData<string|number|boolean|objec
     } else {
       // NOTE: add the variable ones in too if they are the same category, they still may be relevant
       if(typeof awardData[i].amount === "string") {
-        if(awardData[i].amount.toLowerCase() === "variable") {
-          returnableResultSet.push(awardData[i]);
-        }
+        returnableResultSet.push(awardData[i]);
       }
     } 
   }

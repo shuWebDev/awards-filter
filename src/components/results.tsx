@@ -18,7 +18,6 @@ class Results extends React.Component<Services.ResultsProps> {
 
       //description = description.replace(/(<([^>]+)>)/ig,"");
       // NOTE: format the deadline date to en-US format
-      console.log(deadline);
       if(deadline !== "1899-12-30 00:00:00") {
         let deadlineDate = new Date(deadline);
         formattedDeadline = deadlineDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});

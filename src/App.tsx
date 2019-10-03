@@ -135,6 +135,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
   }
 
   awardAmountChangeHandler = (event: React.FormEvent<HTMLInputElement>) => {
+    console.log(parseInt((event.target as HTMLInputElement).value));
     this.setState({
       // NOTE: since a numeric input's value is actually a string, we need to parse the numeric value to work with it
       awardAmountBox: parseInt((event.target as HTMLInputElement).value)
