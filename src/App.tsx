@@ -282,7 +282,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
                       <div className="expanded button-group">
                         <button className="button" type="button" onClick={this.displayProgramFilter}>Select Program(s)</button>
                         <button id="filter-reset" type="button" className="button" onClick={this.resetDataHandler}>Reset All</button>
-                        <input className="button" type="submit" value="Submit" />
+                        <button className="button" type="submit" value="Submit">Submit</button>
                       </div>
                     </div>
                   </div>
