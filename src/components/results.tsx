@@ -3,11 +3,10 @@ import * as UtilServices from '../util/util';
 
 class Results extends React.Component<Services.ResultsProps> {
 
-  displayResults = (resultSet:Services.AwardData<string|number|boolean|object>[]) => {
+  displayResults = (resultSet:Services.AwardData[]) => {
     let listItems = [];
     for(let i=0; i<resultSet.length; i++) {
       // NOTE: some fields have HTML formatting that doesn't get rendered, but shows up in the data as plain text, we need to strip that for proper display. These fields usually stem from being Rich Text from CommonSpot
-      //let description = UtilServices.prop(resultSet[i], "description");
       let accountType = UtilServices.prop(resultSet[i], "accountType");
       let amount = UtilServices.prop(resultSet[i], "amount");
       let name = UtilServices.prop(resultSet[i], "name");
@@ -16,7 +15,6 @@ class Results extends React.Component<Services.ResultsProps> {
       let deadline = UtilServices.prop(resultSet[i], "deadline");
       let formattedDeadline:string = "";
 
-      //description = description.replace(/(<([^>]+)>)/ig,"");
       // NOTE: format the deadline date to en-US format
       if(deadline !== "1899-12-30 00:00:00") {
         let deadlineDate = new Date(deadline);

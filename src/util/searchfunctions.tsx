@@ -2,9 +2,9 @@
 import * as UtilServices from "./util";
 
 // NOTE: our master filtering function, calls more specific functions to do more granular filtering of the data
-function generateResultListing (awardData:Services.AwardData<string|number|boolean|object>[], filterBoxText:string, selectedPrograms:string[], minAwardAmount:number) {
+function generateResultListing (awardData:Services.AwardData[], filterBoxText:string, selectedPrograms:string[], minAwardAmount:number) {
   // NOTE: our final result set after all filters applied
-  let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = awardData;
+  let returnableResultSet:Services.AwardData[] = awardData;
   
   // NOTE: Precedence of search:
   // 1. Left-side Category (Program)
@@ -33,8 +33,8 @@ function generateResultListing (awardData:Services.AwardData<string|number|boole
 
 
 
-function searchByProgram(awardData:Services.AwardData<string|number|boolean|object>[], selectedPrograms:string[]) {
-  let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = [];
+function searchByProgram(awardData:Services.AwardData[], selectedPrograms:string[]) {
+  let returnableResultSet:Services.AwardData[] = [];
 
   
   // NOTE: cycle through the records
@@ -61,36 +61,33 @@ function searchByProgram(awardData:Services.AwardData<string|number|boolean|obje
 
 
 
-// NOTE: filter results that contain a (string) property that matches a string from an input box
-function searchByText(awardData:Services.AwardData<string|number|boolean|object>[], filterBoxText:string) { 
- // NOTE: our return set
- let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = [];
- filterBoxText = filterBoxText.toLowerCase();
+// NOTE: filter results that contain a (string) property that matches a string from an input box. UtilServices.prop is utilized here to properly get the value from a given key in an object to satisfy the type checker
 
- // NOTE: get the keys for each award record (array of key names as strings)
- for(let i=0; i<awardData.length; i++) {
-   let currentRecord:Services.AwardData<string|number|boolean|object> = awardData[i];
-   const keys:string[] = Object.keys(currentRecord);
-   
-   // NOTE: cycle through the list of key names, get their values
-   for(let i=0; i<keys.length; i++) {
-     let recordProp = UtilServices.prop(currentRecord, keys[i])
-     if(typeof recordProp === "string") {
-       // NOTE: for filter textbox search, we only care about comparing to string fields in each record, ignore the numbers, booleans, etc
-       if(recordProp.toLowerCase().includes(filterBoxText)) {
-         // NOTE: if we have a record that contains a field with a match to our filter text, push it to the result set array
-         returnableResultSet.push(currentRecord);
-         break; // NOTE: break out, we found a match, so we don't include this record again in the result set if multiple fields contain the search string
-       } 
-     }
-   }
- }
+function searchByText(awardData: Services.AwardData[], filterBoxText: string): Services.AwardData[] {
+  let resultSet: Services.AwardData[] = [];
 
- return returnableResultSet; // NOTE: we will end up returning an object array with the records that match what we are looking for
+  for(let item in awardData) {
+    const keys: string[] = Object.keys(awardData[item]);
+    for(let i=0; i<keys.length; i++) {
+      if(typeof keys[i] === "string") {
+        let prop:string = UtilServices.prop(awardData[item],keys[i]);
+        if(prop.toString().toUpperCase().includes(filterBoxText.toUpperCase())) {
+          if(!resultSet.includes(awardData[item])) {
+            resultSet.push(awardData[item]);
+          }
+        }
+      }
+    }
+  }
+
+  return resultSet;
 }
 
-function searchByAmount(awardData:Services.AwardData<string|number|boolean|object>[], minAwardAmount:number) {
-  let returnableResultSet:Services.AwardData<string|number|boolean|object>[] = []; 
+
+
+
+function searchByAmount(awardData:Services.AwardData[], minAwardAmount:number) {
+  let returnableResultSet:Services.AwardData[] = []; 
 
   for(let i=0; i<awardData.length; i++) {
     // NOTE: value is a string that can either be numeric or "variable"

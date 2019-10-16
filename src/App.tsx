@@ -66,7 +66,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
   componentDidMount = () => {
   
     // NOTE: load our initial data
-    UtilServices.loadAwards()
+    UtilServices.loadAwards<Services.AwardData>("/_cs_apps/data/academic-award.json")
     .then((response:any) => {
       this.setState({
         awardData: response.data,
@@ -148,7 +148,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
   formSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    let returnableResultSet:Services.AwardData<string|number|object|boolean>[];
+    let returnableResultSet:Services.AwardData[];
 
     // NOTE: send the data off to the filtering function to be filtered
     

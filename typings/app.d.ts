@@ -39,7 +39,7 @@ declare namespace Services {
     awardAmount: number
   }
 
-  interface AwardData<TValue> {
+  interface AwardData {
     accountType: string,
     aidType: string,
     amount: string,
@@ -61,7 +61,7 @@ declare namespace Services {
     studentStatus: string[],
     tags: string[],
     url: string,
-    uuid: string,
+    uuid: string
     [key: string]: TValue;
   }
 }
