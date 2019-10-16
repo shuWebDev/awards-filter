@@ -38,3 +38,8 @@ label input[type="checkbox"] {
   display: inline;
   list-style-type: none;
 }
+
+legend {
+  display: block;
+  width: 100%;
+}
