@@ -64,6 +64,7 @@ function searchByProgram(awardData:Services.AwardData[], selectedPrograms:string
 // NOTE: filter results that contain a (string) property that matches a string from an input box. UtilServices.prop is utilized here to properly get the value from a given key in an object to satisfy the type checker
 
 function searchByText(awardData: Services.AwardData[], filterBoxText: string): Services.AwardData[] {
+  let t0 = performance.now();
   let resultSet: Services.AwardData[] = [];
 
   for(let item in awardData) {
@@ -79,7 +80,8 @@ function searchByText(awardData: Services.AwardData[], filterBoxText: string): S
       }
     }
   }
-
+  let t1 = performance.now();
+  console.log(`searchByText took ${t1-t0} milliseconds to complete.`);
   return resultSet;
 }
 

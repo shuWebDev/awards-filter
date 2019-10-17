@@ -28,7 +28,7 @@ export function populatePrograms(dataToSearch:Services.AwardData[]):string[] {
 }
 
 export function paginateResults(array:Services.AwardData[], chunkSize:number):Services.AwardData[][] {
-
+  let t0 = performance.now();
   let result:Services.AwardData[][] = [[]];
   
   for(let i=0; i<array.length; i++) {
@@ -39,12 +39,13 @@ export function paginateResults(array:Services.AwardData[], chunkSize:number):Se
       last.push(array[i]);
     }
   }
-
+  let t1 = performance.now();
+  console.log(`Pagination took ${t1-t0} milliseconds to complete.`);
   return result;
 }
 
 
-// NOTE: given an object and key, returns the key value
+// NOTE: given an object and key of said object, returns the key value
 // (needed for type assertion since Object.keys doesn't directly satisfy a type trying to match key value pairs with filter)
 export function prop<T, K extends keyof T>(obj: T, key: K):T[K] {
   return obj[key];
