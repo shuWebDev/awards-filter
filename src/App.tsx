@@ -64,9 +64,8 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
   }
 
   componentDidMount = () => {
-  
     // NOTE: load our initial data
-    UtilServices.loadAwards<Services.AwardData>("/_cs_apps/data/academic-award.json")
+    UtilServices.loadAwards<Services.AwardData>(dataPath)
     .then((response:any) => {
       this.setState({
         awardData: response.data,
@@ -79,7 +78,6 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
 
   resetDataHandler = () => {
     // NOTE: clear all checked Program boxes
-    
     let checkboxes:HTMLInputElement[] = Array.from(document.querySelectorAll<HTMLInputElement>(".programs-checkbox"));
 
     for(let i=0; i<checkboxes.length; i++) {

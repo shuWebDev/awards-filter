@@ -13,18 +13,15 @@ function generateResultListing (awardData:Services.AwardData[], filterBoxText:st
   
   // NOTE: filter by category
   if(selectedPrograms.length) {
-    //console.log("filter by program ran");
     returnableResultSet = searchByProgram(awardData,selectedPrograms);
   }
   // NOTE: filter by minimum amount 
   if(minAwardAmount > 0) {
-    //console.log("filter by amount ran");
     returnableResultSet = searchByAmount(returnableResultSet, minAwardAmount);
   }
 
   // NOTE: filter those results by text string
   if(filterBoxText.length) {
-    //console.log("filter by filterboxtext ran");
     returnableResultSet = searchByText(returnableResultSet,filterBoxText);
   }
 
@@ -85,9 +82,6 @@ function searchByText(awardData: Services.AwardData[], filterBoxText: string): S
   return resultSet;
 }
 
-
-
-
 function searchByAmount(awardData:Services.AwardData[], minAwardAmount:number) {
   let returnableResultSet:Services.AwardData[] = []; 
 
@@ -109,6 +103,5 @@ function searchByAmount(awardData:Services.AwardData[], minAwardAmount:number) {
 
   return returnableResultSet;
 }
-
 
 export { generateResultListing }
