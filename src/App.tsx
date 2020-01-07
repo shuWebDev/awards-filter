@@ -225,11 +225,12 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
         currentPage++;
       }
     }
-
+    
     this.setState({
       currentPage: currentPage
-    }, () => {console.log(this.state.currentPage)});
+    }, () => {window.scrollTo(0,0);});
 
+    
     return;
   }
 
@@ -237,7 +238,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
   paginationButtonHandler = (index:number) => {
     this.setState({
       currentPage: index
-    });
+    }, () => {window.scrollTo(0,0);});
   }
 
 
