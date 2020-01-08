@@ -203,7 +203,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       <nav aria-label="Pagination">
         <ul className="pagination text-center">
           {prevButton}
-          {pageButtons}
+          {/*pageButtons*/}
           {nextButton}
         </ul>
       </nav>
@@ -264,10 +264,10 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
               <div className="grid-x grid-margin-x">
                 <div className="cell medium-12">
                   <div className="grid-x grid-margin-x">
-                    <div className="cell medium-9 small-12">
+                    <div className="cell medium-7 small-12">
                       <FilterBox filterBoxProps={filterBoxProps} />
                     </div>
-                    <div className="cell medium-3 small-12">
+                    <div className="cell medium-5 small-12">
                       <AwardAmount awardAmountChangeHandler={this.awardAmountChangeHandler} awardAmount={this.state.awardAmountBox} />
                     </div>
                   </div>
