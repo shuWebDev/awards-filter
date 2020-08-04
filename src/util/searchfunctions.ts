@@ -95,11 +95,15 @@ function searchByAmount(awardData:Services.AwardData[], minAwardAmount:number) {
 
   if(awardData.length) {
     for(let i=0; i<awardData.length; i++) {
+      console.log(awardData[i].amount);
+
       // NOTE: value is a string that can either be numeric or "variable"
-      
+      //console.log(typeof awardData[i].amount);
       // NOTE: if the value is a number, test if it fits what we need
       if(typeof awardData[i].amount === "number") {
+        //console.log(parseInt(awardData[i].amount))
         if(parseInt(awardData[i].amount) >= minAwardAmount) {
+          //console.log(awardData[i].amount);
           returnableResultSet.push(awardData[i]);
         }
       } else {

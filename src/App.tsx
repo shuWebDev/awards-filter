@@ -133,7 +133,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
   }
 
   awardAmountChangeHandler = (event: React.FormEvent<HTMLInputElement>) => {
-    console.log(parseInt((event.target as HTMLInputElement).value));
+    //console.log(parseInt((event.target as HTMLInputElement).value));
     this.setState({
       // NOTE: since a numeric input's value is actually a string, we need to parse the numeric value to work with it
       awardAmountBox: parseInt((event.target as HTMLInputElement).value)
@@ -146,6 +146,30 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
   formSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
+    let returnableResultSet:Services.AwardData[];
+
+    // NOTE: send the data off to the filtering function to be filtered
+    console.log(this.state.awardAmountBox);
+    returnableResultSet = generateResultListing(this.state.awardData, this.state.filterBoxText, this.state.selectedPrograms, this.state.awardAmountBox);
+    console.log(returnableResultSet);
+
+    if(returnableResultSet.length) {
+      // NOTE: There is at least one matching record, format the results for pagination and save state
+      this.setState({
+        //currentPage: 0,
+        resultSet: UtilServices.paginateResults(returnableResultSet, this.state.resultsPerPage),
+      });
+    } else {
+      // NOTE: There are no matching records
+      this.setState({
+        resultSet: [[]]
+      });
+    }
+
+    return;
+  }
+
+  programsFilterCloseHandler = () => {
     let returnableResultSet:Services.AwardData[];
 
     // NOTE: send the data off to the filtering function to be filtered
@@ -165,13 +189,11 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       });
     }
 
-    return;
-  }
-
-  programsFilterCloseHandler = () => {
     this.setState({
       programFilterDisplayed: false
     });
+
+    return;
   }
 
   displayPaginationControls = (numPages:number) => {
