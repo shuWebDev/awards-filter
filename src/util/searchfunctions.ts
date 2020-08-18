@@ -79,7 +79,7 @@ function searchByText(awardData: Services.AwardData[], filterBoxText: string): S
             }
           }
         }
-      }
+      } 
     }
     let t1 = performance.now();
     console.log(`searchByText took ${t1-t0} milliseconds to complete.`);
