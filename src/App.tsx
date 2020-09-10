@@ -6,14 +6,13 @@ import FilterBox from './components/filterbox';
 import AwardAmount from './components/awardamount';
 import * as UtilServices from './util/util';
 import { generateResultListing } from './util/searchfunctions';
-import styles from './index.module.css';
 
 class App extends React.Component<Services.AppProps, Services.AppState> {
   constructor(props:Services.AppProps) {
     super(props);
 
     this.state = {
-      programFilterDisplayed: false,
+      programFilterDisplayed: false, 
       programs: [],
       selectedPrograms: [],
       awardData: [],
@@ -22,7 +21,8 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       filterBoxPlaceholder: `ex: "Endowment", "Max", "memorial"...`,
       awardAmountBox: 0,
       currentPage: 0,
-      resultsPerPage: 5
+      resultsPerPage: 5,
+      categoryData: []
     }
   }
 
@@ -52,7 +52,7 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
       return (
       <div>
         <label>Applied Program Filters:
-          <ul className={styles.pfbadgelist}>
+          <ul>
           {output}
           </ul>
         </label>
@@ -64,8 +64,17 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
   }
 
   componentDidMount = () => {
+    // NOTE: load category data to resolve categories
+    fetch('/category.json')
+    .then(response => response.json())
+    .then(json => {
+      this.setState({
+        categoryData: json
+      });
+    });
+
     // NOTE: load our initial data
-    UtilServices.loadAwards<Services.AwardData>(dataPath)
+    UtilServices.loadAwards<Services.AwardData>('https://site8.auth.dev.shu.commonspotcloud.com/rest/data/academicAwards/all')
     .then((response:any) => {
       this.setState({
         awardData: response.data,
@@ -266,58 +275,54 @@ class App extends React.Component<Services.AppProps, Services.AppState> {
 
   render = () => {
     if(this.state.awardData.length) {
-      if(this.state.programFilterDisplayed) {
-        return (
-          <div className={`grid-x grid-margin-x`}>
-            <div className="cell medium-12">
-              <Programs programList={this.state.programs} programCheckboxHandler={this.programCheckboxHandler} programsFilterCloseHandler={this.programsFilterCloseHandler} />
-            </div>
-          </div> 
-        )
-      } else {
-        const filterBoxProps = {
-          filterBoxChangeHandler: this.filterBoxChangeHandler,
-          filterBoxText: this.state.filterBoxText,
-          filterBoxPlaceholder: this.state.filterBoxPlaceholder
-        };
-        return (
-          <main>
-            <form onSubmit={this.formSubmitHandler}>
-              <div className="grid-x grid-margin-x">
-                <div className="cell medium-12">
-                  <div className="grid-x grid-margin-x">
-                    <div className="cell medium-7 small-12">
-                      <FilterBox filterBoxProps={filterBoxProps} />
-                    </div>
-                    <div className="cell medium-5 small-12">
-                      <AwardAmount awardAmountChangeHandler={this.awardAmountChangeHandler} awardAmount={this.state.awardAmountBox} />
-                    </div>
+
+      const filterBoxProps = {
+        filterBoxChangeHandler: this.filterBoxChangeHandler,
+        filterBoxText: this.state.filterBoxText,
+        filterBoxPlaceholder: this.state.filterBoxPlaceholder
+      };
+
+      return (
+        <main>
+          <form onSubmit={this.formSubmitHandler}>
+            <div className="grid-x grid-margin-x">
+              <div className="cell medium-12">
+                <div className="grid-x grid-margin-x">
+                  <div className="cell medium-4 medium-offset-3 small-12">
+                    <FilterBox filterBoxProps={filterBoxProps} />
                   </div>
-                  <div className="grid-x grid-margin-x">
-                    <div className="small-12 cell">
-                    {(this.state.selectedPrograms.length)? this.displayBadges() : null}
-                    </div>
+                  <div className="cell medium-2 small-12">
+                    <AwardAmount awardAmountChangeHandler={this.awardAmountChangeHandler} awardAmount={this.state.awardAmountBox} />
                   </div>
-                  <div className="grid-x grid-margin-x">
-                    <div className="cell medium-6 small-12 medium-push-3">
-                      <div className="expanded button-group">
-                        <button className="button" type="button" onClick={this.displayProgramFilter}>Select Program(s)</button>
-                        <button id="filter-reset" type="button" className="button" onClick={this.resetDataHandler}>Reset All</button>
-                        <button className="button" type="submit" value="Submit">Submit</button>
-                      </div>
-                    </div>
-                  </div>
-                  <p><strong>Press Submit to apply all selected filtering.</strong></p>
-                  <hr />
-                  {(this.state.resultSet.length)?this.displayPaginationControls(this.state.resultSet.length): null}
-                  <Results resultSet={this.state.resultSet[this.state.currentPage]} />
-                  {(this.state.resultSet.length)?this.displayPaginationControls(this.state.resultSet.length): null}
                 </div>
+                <div className="grid-x grid-margin-x">
+                <div className="cell medium-6 medium-offset-3 small-12">
+                    <Programs programList={this.state.programs} />
+                  </div>
+                </div>
+                <div className="grid-x grid-margin-x">
+                  <div className="small-12 cell">
+                  {(this.state.selectedPrograms.length)? this.displayBadges() : null}
+                  </div>
+                </div>
+                <div className="grid-x grid-margin-x">
+                  <div className="cell medium-6 small-12 medium-push-3">
+                    <div className="expanded button-group">
+                      <button id="filter-reset" type="button" className="button" onClick={this.resetDataHandler}>Reset All</button>
+                      <button className="button" type="submit" value="Submit">Submit</button>
+                    </div>
+                  </div>
+                </div>
+                <p><strong>Press Submit to apply all selected filtering.</strong></p>
+                <hr />
+                {(this.state.resultSet.length)?this.displayPaginationControls(this.state.resultSet.length): null}
+                <Results resultSet={this.state.resultSet[this.state.currentPage]} />
+                {(this.state.resultSet.length)?this.displayPaginationControls(this.state.resultSet.length): null}
               </div>
-            </form>
-          </main>
-        )
-      } 
+            </div>
+          </form>
+        </main>
+      ); 
     } else {
       return (
         <main>

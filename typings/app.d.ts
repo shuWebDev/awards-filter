@@ -13,7 +13,8 @@ declare namespace Services {
     filterBoxPlaceholder: string,
     awardAmountBox: number,
     resultsPerPage: number,
-    currentPage: number
+    currentPage: number,
+    categoryData: Category[]
   }
 
   interface FilterBox {
@@ -25,9 +26,7 @@ declare namespace Services {
   }
 
   interface ProgramProps {
-    programList: string[] | undefined,
-    programCheckboxHandler: function,
-    programsFilterCloseHandler: function
+    programList: string[] | undefined | void;
   }
 
   interface ResultsProps {
@@ -37,6 +36,15 @@ declare namespace Services {
   interface AwardAmountProps {
     awardAmountChangeHandler: function,
     awardAmount: number
+  }
+
+  interface Category {
+    pageID: string,
+    description: string,
+    title: string,
+    uuid: string,
+    type: string[],
+    imageSmall: object
   }
 
   interface AwardData {

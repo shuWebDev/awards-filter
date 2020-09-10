@@ -1,0 +1,616 @@
+{
+  "created": "Wed, 26 Aug 2020 16:48:45 GMT",
+  "elementName": "Category",
+  "elementID": 9947,
+  "count": 48,
+  "data": [
+    {
+      "pageID": "9963",
+      "description": "Typically used for weather related emergency messages.",
+      "title": "Weather Related",
+      "uuid": "5BFB1A95-BF4B-8E40-292DF146E598DC11",
+      "type": [
+        "Emergency Message"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "9965",
+      "description": "Related to the Emergency Message element.",
+      "title": "Emergency",
+      "uuid": "5C0B2A30-A3E3-6268-2B1017AA1139B04B",
+      "type": [
+        "Emergency Message"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "9967",
+      "description": "Typically related to the Emergency Message element.",
+      "title": "Important",
+      "uuid": "5C147510-DC28-7F53-50D7641897CDEEAF",
+      "type": [
+        "General",
+        "Emergency Message"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "9989",
+      "description": "Assigned to University units that are Centers",
+      "title": "Center",
+      "uuid": "5D767DCB-0D86-531C-E32E9C9639515107",
+      "type": [
+        "Unit"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "9991",
+      "description": "Assigned to University units that are Colleges",
+      "title": "College",
+      "uuid": "5D8542EC-C571-65D9-1FA5702B8EA231A1",
+      "type": [
+        "Unit"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "9993",
+      "description": "Assigned to University units that are Departments",
+      "title": "Department",
+      "uuid": "5D896EA7-0B3C-3F19-D48F09C873060E61",
+      "type": [
+        "Unit"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "9995",
+      "description": "Assigned to University units that are Divisions.",
+      "title": "Division",
+      "uuid": "5D8D2B21-B891-CFE7-8CD6A328A3D8F027",
+      "type": [
+        "Unit"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "9997",
+      "description": "Assigned to University units that are Institutes",
+      "title": "Institute",
+      "uuid": "5D9158A2-B568-5E60-B7C2C277C3BE575B",
+      "type": [
+        "Unit"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "9999",
+      "description": "Assigned to University units that are Offices.",
+      "title": "Office",
+      "uuid": "5D961BB4-C14E-ED04-4512D33830A100B2",
+      "type": [
+        "Unit"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "10001",
+      "description": "Assigned to University units that are Programs",
+      "title": "Program",
+      "uuid": "5D9B4C08-B5EC-B88F-46D09BFFDA9529DC",
+      "type": [
+        "Unit"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "10003",
+      "description": "Assigned to University units that are Schools",
+      "title": "School",
+      "uuid": "5D9F24A5-DDAE-96F6-89FB7C4D8ACDEC77",
+      "type": [
+        "Unit"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "12752",
+      "description": "Arts and Culture",
+      "title": "Arts and Culture",
+      "uuid": "7C3766DE-F484-40CF-0E332731E257D502",
+      "type": [
+        "Media Hit",
+        "News"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "12754",
+      "description": "Athletics",
+      "title": "Athletics",
+      "uuid": "7C3C5EF5-B4D1-CB2A-FB48A297FEC02BD8",
+      "type": [
+        "Media Hit",
+        "News",
+        "Academic Scholarship"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "12756",
+      "description": "Business",
+      "title": "Business",
+      "uuid": "7C40EDC7-D3EC-0BE7-B5772BC79E9D83A0",
+      "type": [
+        "Media Hit",
+        "News"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "13905",
+      "description": "Alumni",
+      "title": "Alumni",
+      "uuid": "7AA3D771-D63C-3E3F-1DD7167401BCB683",
+      "type": [
+        "Media Hit",
+        "News",
+        "Spotlight"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "13908",
+      "description": "Campus Life",
+      "title": "Campus Life",
+      "uuid": "7AA99BBD-D1F5-AEB9-CCA4A35594347C1E",
+      "type": [
+        "Media Hit",
+        "News"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "13910",
+      "description": "Education",
+      "title": "Education",
+      "uuid": "7AAD6A64-CA5F-0256-CDB2C68C7CBA8D31",
+      "type": [
+        "Media Hit",
+        "News"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "13912",
+      "description": "Faith and Service",
+      "title": "Faith and Service",
+      "uuid": "7AB03D79-EC86-1F09-373D8921B3064EEB",
+      "type": [
+        "Media Hit",
+        "News"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "13914",
+      "description": "Health and Medicine",
+      "title": "Health and Medicine",
+      "uuid": "7AB70227-A88B-35C4-6A577E4D7BF057ED",
+      "type": [
+        "Media Hit",
+        "News"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "13916",
+      "description": "Nation and World",
+      "title": "Nation and World",
+      "uuid": "7ABBA676-C4FE-120B-207F661580085D6A",
+      "type": [
+        "Media Hit",
+        "News"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "13918",
+      "description": "Law",
+      "title": "Law",
+      "uuid": "7AC0B8CC-AC9A-C32F-BD5F724D6572D662",
+      "type": [
+        "Media Hit",
+        "News"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "13920",
+      "description": "Research",
+      "title": "Research",
+      "uuid": "7AC3A474-A664-CA8C-AC8139CD10B8ABD1",
+      "type": [
+        "Media Hit",
+        "News"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "13922",
+      "description": "Science and Technology",
+      "title": "Science and Technology",
+      "uuid": "7AC71B40-FC80-3A05-C258883756BA129F",
+      "type": [
+        "Media Hit",
+        "News"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "58606",
+      "description": "Undergraduate Program",
+      "title": "Undergraduate Progam",
+      "uuid": "5119A490-B06F-9B1A-40878664E143D40D",
+      "type": [
+        "General",
+        "Program"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "58729",
+      "description": "Graduate Program",
+      "title": "Graduate Program",
+      "uuid": "7EB0D1AE-9783-9517-C42D5825EDE60276",
+      "type": [
+        "Program"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "62607",
+      "description": "Certificate program",
+      "title": "Certificate",
+      "uuid": "31ECAB89-9D05-DF1A-E647DF60AF00EA85",
+      "type": [
+        "General",
+        "Program"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "66049",
+      "description": "Special program",
+      "title": "Special Program",
+      "uuid": "5939B2EB-D637-C7B1-5D3076989AB5E86C",
+      "type": [
+        "General",
+        "Program"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "66147",
+      "description": "Dual Degree",
+      "title": "Dual Degree",
+      "uuid": "CD937707-A7E4-D5B9-F82C136FAA66D83B",
+      "type": [
+        "Program"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "166757",
+      "description": "Indicates program is offered online.",
+      "title": "Online",
+      "uuid": "8D205F3E-B998-DCB2-1BAF3C62BB6823E2",
+      "type": [
+        "Program"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "186227",
+      "description": "Content related to all students.",
+      "title": "Student",
+      "uuid": "68E81614-CB4F-AB90-3DDECCEB2BB33D84",
+      "type": [
+        "Audience",
+        "Spotlight"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "186229",
+      "description": "Content related to FacStaff.",
+      "title": "Faculty & Staff",
+      "uuid": "68EDCE9F-EB50-FB6B-F01918F4A1841B51",
+      "type": [
+        "Audience"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "186235",
+      "description": "Content related to administrators",
+      "title": "Administrators",
+      "uuid": "68F27045-A680-EA2A-8A5DB7312DE6B091",
+      "type": [
+        "Audience"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "186241",
+      "description": "For advisers...",
+      "title": "Advisers",
+      "uuid": "68F7E1D3-B6B2-E302-47B37EBC9843BD7D",
+      "type": [
+        "Audience"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "186245",
+      "description": "parent stuff",
+      "title": "Parents",
+      "uuid": "68FD249E-F98C-906B-618EDB0B23C3F0BC",
+      "type": [
+        "Audience"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "187503",
+      "description": "Academic resources available to the campus community.",
+      "title": "Academics",
+      "uuid": "A450F94A-B06E-5B66-B9EE10B7B39B6ECE",
+      "type": [
+        "Task-Service",
+        "Academic Scholarship"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "187513",
+      "description": "Resources available on campus.",
+      "title": "Campus",
+      "uuid": "A52481B4-EC68-266D-23EFECAEC266251E",
+      "type": [
+        "Task-Service"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "188261",
+      "description": "Faculty Resources",
+      "title": "For Faculty",
+      "uuid": "0D9CC9B8-97FB-F9AB-62CC7DCC410ABF33",
+      "type": [
+        "General"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "188263",
+      "description": "Parent Resources",
+      "title": "For Parents",
+      "uuid": "0DA06108-9272-D90D-35F027B8ED4943B8",
+      "type": [
+        "General"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "188265",
+      "description": "Policies and Procedures",
+      "title": "Policies and Procedures",
+      "uuid": "0DA45C1F-B853-8C6A-C92571D1F73942A5",
+      "type": [
+        "General"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "188267",
+      "description": "Scholarship",
+      "title": "Scholarship",
+      "uuid": "0DA69C67-0253-7778-DD04DAED59BF321F",
+      "type": [
+        "General",
+        "Task-Service"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "188269",
+      "description": "Student Resources",
+      "title": "For Students",
+      "uuid": "0DA92821-C800-B1AB-E44DC223D647C6B4",
+      "type": [
+        "General"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "189256",
+      "description": "Information about student life on campus.",
+      "title": "Student Life",
+      "uuid": "0660DA1B-B000-D3E6-1CFB0D88C9474163",
+      "type": [
+        "General",
+        "Task-Service"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "189261",
+      "description": "Information on Policies and Procedures. ",
+      "title": "Policies and Procedures ",
+      "uuid": "06F28A72-FABB-2375-1865DAD88FB4ED12",
+      "type": [
+        "General",
+        "Task-Service"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "189308",
+      "description": "Information on financial aid, scholarships, probation, government aid for students and parents. ",
+      "title": "Financial Aid ",
+      "uuid": "082389E9-F30D-DB3D-EAD35FEA622B6027",
+      "type": [
+        "Task-Service"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "279675",
+      "description": "Used to categorize content of undergrads.",
+      "title": "Undergraduate",
+      "uuid": "D5AE5156-9009-342A-D8CEBC41FB2B96FD",
+      "type": [
+        "General",
+        "Audience",
+        "Academic Scholarship",
+        "Spotlight"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "279677",
+      "description": "Categorizes content for grads.",
+      "title": "Graduate",
+      "uuid": "D5BF5C36-917E-071F-8E77CDFA99C58345",
+      "type": [
+        "General",
+        "Audience",
+        "Academic Scholarship",
+        "Spotlight"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "279679",
+      "description": "Used to categorize content of incoming students",
+      "title": "Incoming",
+      "uuid": "D5C7A92A-C0AC-9F48-7B46DA1A24AA9371",
+      "type": [
+        "General",
+        "Audience",
+        "Academic Scholarship"
+      ],
+      "imageSmall": {
+        
+      }
+    },
+    {
+      "pageID": "294074",
+      "description": "Content related to only Faculty",
+      "title": "Faculty",
+      "uuid": "F8ABAF72-F07E-63E5-F55DC5071B22D583",
+      "type": [
+        "General",
+        "Spotlight"
+      ],
+      "imageSmall": {
+        
+      }
+    }
+  ]
+}

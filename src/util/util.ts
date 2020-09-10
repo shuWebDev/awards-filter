@@ -2,7 +2,7 @@
 
 
 export async function loadAwards<T extends object>(url: string):Promise<T> {
-  // NOTE: relative to local public folder
+  
   return await fetch(url)
   .then((response:any) => {
     return response.json();
@@ -24,11 +24,13 @@ export function populatePrograms(dataToSearch:Services.AwardData[]):string[] {
   });
 
   extractedProgramList.sort();
+
+  console.log(extractedProgramList);
   return extractedProgramList;
 }
 
 export function paginateResults(array:Services.AwardData[], chunkSize:number):Services.AwardData[][] {
-  let t0 = performance.now();
+  
   let result:Services.AwardData[][] = [[]];
   
   for(let i=0; i<array.length; i++) {
@@ -39,8 +41,7 @@ export function paginateResults(array:Services.AwardData[], chunkSize:number):Se
       last.push(array[i]);
     }
   }
-  let t1 = performance.now();
-  console.log(`Pagination took ${t1-t0} milliseconds to complete.`);
+  
   return result;
 }
 

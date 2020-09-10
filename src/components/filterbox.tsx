@@ -7,7 +7,7 @@ class Filterbox extends React.Component<Services.FilterBox> {
     return (
       <div>
         <fieldset>
-          <legend><strong>Enter keywords</strong>(optional)</legend>
+          <label>Keywords</label>
             <input id="filterbox-text"  placeholder={filterBoxConfig.filterBoxPlaceholder} type="text" onChange={filterBoxConfig.filterBoxChangeHandler} value={filterBoxConfig.filterBoxText} />
         </fieldset>
       </div>
